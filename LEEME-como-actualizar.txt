@@ -1,0 +1,49 @@
+==================================================================
+  ABYA — CARPETA MAESTRA DEL SITIO
+  Cómo publicar cambios en Netlify (flujo manual)
+==================================================================
+
+Esta carpeta es tu "fuente de la verdad". SIEMPRE edita aquí y
+sube ESTA carpeta completa a Netlify. Nunca subas archivos sueltos.
+
+Archivos:
+  index.html         -> página principal (home)
+  panel.html         -> panel para agregar/editar investigaciones
+  verificacion.html  -> protocolo + fichas de verificación
+  fichas.json        -> base de datos de fichas (empieza vacía: [])
+  netlify.toml       -> config de Netlify (no la borres)
+  (investigaciones.json aparecerá cuando lo exportes del panel)
+
+------------------------------------------------------------------
+A) CAMBIAR TEXTOS O DISEÑO DEL SITIO
+------------------------------------------------------------------
+1. Abre el archivo .html que quieras (con un editor de texto:
+   VS Code, Notepad++, o el Bloc de notas).
+2. Cambia el texto/color/sección y GUARDA.
+3. Ve al paso "PUBLICAR" de abajo.
+
+------------------------------------------------------------------
+B) AGREGAR / EDITAR INVESTIGACIONES O FICHAS (contenido)
+------------------------------------------------------------------
+1. Abre panel.html (investigaciones) o verificacion.html (fichas)
+   en tu navegador.
+2. Agrega o edita lo que necesites.
+3. Pulsa "Exportar investigaciones.json" (o "Exportar fichas.json").
+4. Guarda ese archivo descargado DENTRO de esta carpeta,
+   reemplazando el anterior.
+5. Ve al paso "PUBLICAR".
+
+------------------------------------------------------------------
+PUBLICAR (los dos casos terminan igual)
+------------------------------------------------------------------
+1. Entra a https://app.netlify.com  y abre el sitio "abyapensamiento".
+2. Pestaña "Deploys".
+3. Arrastra ESTA CARPETA COMPLETA a la zona que dice
+   "Drag and drop your site output folder here".
+   -> Arrastra la carpeta entera, NO archivos sueltos.
+4. Espera ~20 seg a que diga "Published". Listo, ya está en vivo.
+
+REGLA DE ORO: un deploy manual REEMPLAZA todo el sitio. Si arrastras
+solo un archivo, el resto desaparece. Por eso siempre se sube la
+carpeta completa.
+==================================================================

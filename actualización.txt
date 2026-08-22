@@ -1,0 +1,677 @@
+
+
+El sitio debe permitir:
+
+* Publicar investigaciones.
+* Publicar artículos.
+* Publicar noticias o análisis.
+* Subir imágenes.
+* Publicar documentos PDF.
+* Publicar podcast.
+* Integrar Spotify.
+* Integrar redes sociales.
+* Contabilizar visitas.
+* Tener buscador interno.
+* Organizar contenidos por categorías.
+* Tener etiquetas.
+* Permitir compartir publicaciones.
+* Tener un panel de administración.
+* Permitir editar textos, botones, imágenes y enlaces.
+* Tener acceso protegido para el administrador.
+* Ser accesible desde computadores, celulares y tablets.
+* Poder publicarse gratuitamente.
+* Tener una dirección web que pueda compartirse.
+* Permitir posteriormente conectar un dominio propio.
+
+---
+
+# 2. PERFIL DEL ADMINISTRADOR / DESARROLLADOR
+
+Debe existir un **panel privado de administración** al que solamente pueda acceder el administrador mediante usuario y contraseña.
+
+Desde este panel quiero poder:
+
+### Contenido
+
+* Crear nuevas investigaciones.
+* Crear artículos.
+* Crear publicaciones.
+* Editar publicaciones existentes.
+* Eliminar publicaciones.
+* Guardar publicaciones como borrador.
+* Programar publicaciones.
+* Publicar inmediatamente.
+* Destacar publicaciones.
+* Crear categorías.
+* Crear etiquetas.
+* Crear páginas nuevas.
+* Crear menús.
+* Modificar textos.
+* Modificar botones.
+* Modificar enlaces.
+* Cambiar imágenes.
+* Subir archivos PDF.
+* Insertar videos.
+* Insertar audios.
+* Insertar contenido de Spotify.
+
+### Multimedia
+
+Debe existir una biblioteca multimedia donde pueda:
+
+* Subir imágenes.
+* Guardar imágenes.
+* Reutilizar imágenes.
+* Subir PDF.
+* Organizar archivos.
+* Eliminar archivos.
+* Agregar imágenes destacadas a las publicaciones.
+
+---
+
+# 3. PÁGINA PRINCIPAL
+
+Crear una página de inicio moderna y profesional.
+
+Debe contener como mínimo:
+
+### Encabezado
+
+* Logo/nombre del proyecto.
+* Menú principal.
+* Buscador.
+* Botón de contacto.
+* Acceso a redes sociales.
+
+### Sección principal
+
+Un banner o sección destacada con:
+
+* Título.
+* Descripción.
+* Imagen.
+* Botón de acción.
+
+### Publicaciones destacadas
+
+Mostrar las investigaciones y artículos más importantes.
+
+Cada publicación debe mostrar:
+
+* Imagen.
+* Título.
+* Fecha.
+* Autor.
+* Categoría.
+* Breve descripción.
+* Botón "Leer más".
+
+### Últimas publicaciones
+
+Mostrar automáticamente las publicaciones más recientes.
+
+### Categorías
+
+Crear acceso rápido a categorías como:
+
+* Investigaciones.
+* Artículos.
+* Opinión.
+* Análisis.
+* Política.
+* Sociedad.
+* Economía.
+* Territorio.
+* Derechos humanos.
+* Cultura.
+* Podcast.
+* Documentos.
+
+Las categorías deben poder modificarse posteriormente desde el administrador.
+
+---
+
+# 4. BUSCADOR
+
+Crear un buscador interno.
+
+El visitante debe poder buscar:
+
+* Títulos.
+* Artículos.
+* Investigaciones.
+* Autores.
+* Categorías.
+* Etiquetas.
+* Palabras clave.
+
+El resultado debe mostrar:
+
+* Título.
+* Imagen.
+* Extracto.
+* Categoría.
+* Fecha.
+* Botón para acceder al contenido.
+
+---
+
+# 5. SISTEMA DE INVESTIGACIONES
+
+Crear una sección exclusiva llamada:
+
+**INVESTIGACIONES**
+
+Cada investigación debe tener:
+
+* Título.
+* Subtítulo.
+* Autor.
+* Fecha.
+* Categoría.
+* Etiquetas.
+* Imagen de portada.
+* Resumen.
+* Introducción.
+* Contenido.
+* Conclusiones.
+* Referencias.
+* PDF descargable.
+* Botones para compartir.
+* Enlaces relacionados.
+
+Debe existir la posibilidad de guardar investigaciones como:
+
+* Borrador.
+* Publicada.
+* Destacada.
+* Archivada.
+
+---
+
+# 6. SISTEMA DE ARTÍCULOS
+
+Crear una sección:
+
+**ARTÍCULOS**
+
+Debe permitir publicar artículos de manera sencilla.
+
+Cada artículo debe permitir:
+
+* Texto enriquecido.
+* Títulos y subtítulos.
+* Negrita.
+* Cursiva.
+* Listas.
+* Imágenes.
+* Videos.
+* Enlaces.
+* Citas.
+* PDF.
+* Redes sociales.
+* Contenido embebido.
+
+---
+
+# 7. PODCAST
+
+Crear una sección:
+
+**PODCAST**
+
+Debe permitir integrar contenido de Spotify.
+
+Quiero poder:
+
+* Insertar episodios de Spotify.
+* Mostrar portada del podcast.
+* Mostrar nombre del episodio.
+* Mostrar descripción.
+* Mostrar reproductor.
+* Enlazar directamente con Spotify.
+
+También debe existir la posibilidad de integrar posteriormente otras plataformas como:
+
+* YouTube.
+* Apple Podcasts.
+* Amazon Music.
+* Google Podcasts o plataformas equivalentes.
+
+---
+
+# 8. REDES SOCIALES
+
+Crear una sección de redes sociales.
+
+Debe permitir conectar:
+
+* Instagram.
+* Facebook.
+* X/Twitter.
+* TikTok.
+* YouTube.
+* LinkedIn.
+* Spotify.
+
+Los iconos deben aparecer en el encabezado y/o pie de página.
+
+Cada icono debe llevar directamente al perfil correspondiente.
+
+Los enlaces deben poder modificarse desde el panel de administración.
+
+---
+
+# 9. ESTADÍSTICAS
+
+Implementar un sistema gratuito de analítica.
+
+Debe poder mostrar:
+
+* Número de visitantes.
+* Número de visitas.
+* Páginas más visitadas.
+* Publicaciones más consultadas.
+* País de los visitantes.
+* Ciudad cuando sea posible.
+* Dispositivo utilizado.
+* Fuente de tráfico.
+* Tiempo aproximado de navegación.
+* Visitas por día.
+* Visitas por semana.
+* Visitas por mes.
+
+Preferiblemente utilizar una solución gratuita como **Google Analytics** o una alternativa gratuita.
+
+---
+
+# 10. SEO
+
+La página debe estar preparada para aparecer en Google.
+
+Implementar:
+
+* SEO básico.
+* Títulos SEO.
+* Meta descripciones.
+* URLs amigables.
+* Sitemap.
+* Robots.txt.
+* Open Graph.
+* Imágenes optimizadas.
+* Etiquetas.
+* Datos estructurados cuando sea posible.
+* Configuración para compartir correctamente las publicaciones en redes sociales.
+
+Cada investigación y artículo debe poder tener:
+
+* Título SEO.
+* Descripción SEO.
+* Palabras clave.
+* Imagen destacada.
+
+---
+
+# 11. EXPERIENCIA DEL VISITANTE
+
+Como visitante quiero poder:
+
+* Entrar a la página.
+* Navegar fácilmente.
+* Leer artículos.
+* Leer investigaciones.
+* Descargar documentos.
+* Escuchar podcasts.
+* Ver videos.
+* Compartir publicaciones.
+* Acceder a redes sociales.
+* Buscar contenido.
+* Filtrar contenido.
+* Explorar categorías.
+* Consultar publicaciones relacionadas.
+
+La página debe ser:
+
+* Rápida.
+* Intuitiva.
+* Moderna.
+* Profesional.
+* Responsive.
+* Fácil de navegar.
+* Compatible con celulares.
+* Compatible con tablets.
+* Compatible con computadores.
+
+---
+
+# 12. NAVEGACIÓN
+
+Crear un menú principal similar a:
+
+**INICIO | INVESTIGACIONES | ARTÍCULOS | ANÁLISIS | PODCAST | PUBLICACIONES | SOBRE NOSOTROS | CONTACTO**
+
+Agregar un buscador.
+
+Crear también:
+
+### Breadcrumbs
+
+Ejemplo:
+
+Inicio > Investigaciones > Política colombiana > Título de investigación
+
+Esto permitirá al visitante saber dónde se encuentra.
+
+---
+
+# 13. PUBLICACIONES RELACIONADAS
+
+Al finalizar cada investigación o artículo mostrar:
+
+**También te puede interesar**
+
+Y recomendar automáticamente otros contenidos relacionados mediante:
+
+* Categoría.
+* Etiquetas.
+* Temática.
+
+---
+
+# 14. COMPARTIR CONTENIDO
+
+Cada artículo e investigación debe tener botones para compartir en:
+
+* WhatsApp.
+* Facebook.
+* X.
+* LinkedIn.
+* Copiar enlace.
+
+---
+
+# 15. NEWSLETTER
+
+Agregar posteriormente una sección:
+
+**Suscríbete**
+
+Permitir que los visitantes puedan dejar:
+
+* Nombre.
+* Correo electrónico.
+
+El sistema debe estar preparado para conectarse con una herramienta gratuita de correo electrónico.
+
+---
+
+# 16. CONTACTO
+
+Crear una página de contacto con:
+
+* Nombre.
+* Correo.
+* Asunto.
+* Mensaje.
+* Botón enviar.
+
+También agregar:
+
+* Correo electrónico.
+* Redes sociales.
+* Ubicación general si se considera necesario.
+
+---
+
+# 17. SEGURIDAD
+
+El panel administrativo debe estar protegido.
+
+Implementar:
+
+* Usuario.
+* Contraseña.
+* Protección de acceso.
+* Cierre de sesión.
+* Protección básica contra spam.
+* Copias de seguridad cuando sea posible.
+
+No permitir que los visitantes tengan acceso al panel administrativo.
+
+---
+
+# 18. DOMINIO Y PUBLICACIÓN
+
+Quiero que el sitio pueda publicarse **gratuitamente**.
+
+Analiza las mejores alternativas actuales y selecciona la opción más sencilla entre:
+
+* Netlify.
+* GitHub Pages.
+* Vercel.
+* Cloudflare Pages.
+* WordPress.com u otra alternativa gratuita.
+
+La prioridad es:
+
+1. Que sea gratis.
+2. Que sea fácil de administrar.
+3. Que no requiera conocimientos de programación.
+4. Que permita publicar contenido.
+5. Que permita conectar redes sociales.
+6. Que permita estadísticas.
+7. Que permita posteriormente conectar un dominio propio.
+
+Si Netlify no es la mejor opción para cumplir estas condiciones, explica cuál alternativa es mejor y por qué.
+
+---
+
+# 19. PANEL DE ADMINISTRACIÓN
+
+Diseña el sistema pensando en una persona que NO sabe programar.
+
+El administrador debería poder ver un panel similar a:
+
+**PANEL DE ADMINISTRACIÓN**
+
+* Dashboard
+* Publicaciones
+* Investigaciones
+* Artículos
+* Podcast
+* Multimedia
+* Categorías
+* Etiquetas
+* Páginas
+* Menús
+* Redes sociales
+* Estadísticas
+* Configuración
+* Usuarios
+* Copias de seguridad
+
+---
+
+# 20. DISEÑO
+
+El diseño debe ser:
+
+* Profesional.
+* Académico.
+* Institucional.
+* Moderno.
+* Minimalista.
+* Elegante.
+* Fácil de leer.
+
+Priorizar:
+
+* Buena tipografía.
+* Espacios adecuados.
+* Fotografías.
+* Jerarquía visual.
+* Excelente versión móvil.
+* Buena velocidad de carga.
+
+No quiero una página que parezca una plantilla genérica.
+
+---
+
+# 21. FUNCIONES ADICIONALES QUE DEBES PROPONER
+
+Antes de comenzar el desarrollo, analiza el proyecto y propón otras funciones que puedan mejorar el sitio.
+
+Considera especialmente:
+
+* Sistema de favoritos.
+* Contador de lecturas por publicación.
+* Etiquetas.
+* Filtros avanzados.
+* Calendario de publicaciones.
+* Archivo histórico.
+* Autores.
+* Perfiles de investigadores.
+* Bibliografía.
+* Descarga de documentos.
+* Visor PDF.
+* Comentarios.
+* Moderación de comentarios.
+* Newsletter.
+* Formulario de contacto.
+* Botón de WhatsApp.
+* Modo oscuro.
+* Accesibilidad para personas con discapacidad.
+* Traducción a otros idiomas.
+* Integración con YouTube.
+* Integración con Google Drive.
+* Integración con Canva.
+* RSS.
+* Sitemap automático.
+* Copias de seguridad.
+* Optimización de imágenes.
+* Protección contra spam.
+* Página 404 personalizada.
+
+Explica cuáles son realmente necesarias y cuáles pueden agregarse posteriormente.
+
+---
+
+# 22. ARQUITECTURA DEL SITIO
+
+Antes de desarrollar, presenta:
+
+1. Mapa completo del sitio.
+2. Estructura de navegación.
+3. Arquitectura de información.
+4. Diseño de la página principal.
+5. Diseño de una investigación.
+6. Diseño de un artículo.
+7. Diseño del podcast.
+8. Diseño del panel administrativo.
+9. Flujo de publicación.
+10. Flujo de navegación del visitante.
+
+---
+
+# 23. TECNOLOGÍA
+
+Selecciona la tecnología que permita cumplir estos objetivos con el menor costo y complejidad posible.
+
+Prioriza soluciones:
+
+* Gratuitas.
+* Open Source.
+* Fáciles de mantener.
+* Escalables.
+* Seguras.
+* Con buena documentación.
+* Que no requieran conocimientos avanzados de programación.
+
+Si existe una alternativa **No-Code o Low-Code** mejor que desarrollar todo desde cero, recomiéndala.
+
+---
+
+# 24. IMPORTANTE
+
+No quiero solamente una explicación teórica.
+
+Quiero que actúes como desarrollador y me acompañes paso a paso para construir la página.
+
+Primero debes:
+
+### FASE 1 — PLANIFICACIÓN
+
+Analizar los requerimientos y proponer:
+
+* Nombre de la plataforma.
+* Estructura.
+* Funciones.
+* Tecnología.
+* Plataforma de publicación.
+* Sistema de administración.
+* Diseño.
+* Dominio.
+* Integraciones.
+
+### FASE 2 — PROTOTIPO
+
+Crear la estructura visual de:
+
+* Inicio.
+* Investigaciones.
+* Artículos.
+* Podcast.
+* Sobre nosotros.
+* Contacto.
+
+### FASE 3 — DESARROLLO
+
+Construir la página funcional.
+
+### FASE 4 — ADMINISTRACIÓN
+
+Explicar cómo:
+
+* Crear publicaciones.
+* Editar contenido.
+* Subir imágenes.
+* Subir PDF.
+* Agregar podcast.
+* Cambiar redes sociales.
+* Consultar estadísticas.
+* Modificar botones.
+* Crear nuevas páginas.
+
+### FASE 5 — PUBLICACIÓN
+
+Explicar paso a paso cómo publicar gratuitamente el sitio.
+
+### FASE 6 — DOMINIO
+
+Explicar cómo conectar posteriormente un dominio propio.
+
+---
+
+# 25. REGLA FUNDAMENTAL
+
+Quiero que priorices una solución que pueda ser administrada por una persona sin conocimientos técnicos.
+
+**No quiero depender del desarrollador para cada cambio.**
+
+El resultado final debe funcionar como un **medio digital / centro de investigación / portal de conocimiento**, donde pueda publicar y organizar continuamente investigaciones, artículos, documentos, análisis y podcasts.
+
+Antes de comenzar, presenta una propuesta técnica completa y compara las mejores alternativas gratuitas disponibles actualmente, indicando:
+
+* Costo.
+* Facilidad de uso.
+* Limitaciones.
+* Capacidad de almacenamiento.
+* Dominio.
+* Estadísticas.
+* CMS.
+* Seguridad.
+* Integraciones.
+* Escalabilidad.
+
+
+[]

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificación — ABYA</title>
+<meta name="description" content="Protocolo y herramienta de verificación de fuentes, contenido IA y desinformación del proyecto ABYA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12140E; --bg-soft:#191C13; --panel:#1D2117; --ink:#EFE6CF; --ink-dim:#A79C82;
+    --gold:#C9A24B; --gold-soft:#8A7440; --line:#33362B;
+    --a:#3F5A3F; --a-ink:#BFE0BF;
+    --b:#1B3550; --b-ink:#A9C6DE;
+    --c:#7A6A2E; --c-ink:#E9D9A0;
+    --d:#6B1F1F; --d-ink:#E7B2AC;
+    --ok:#3F6B3F; --warn:#8A6A1E; --bad:#7A2626;
+    --display:'Fraunces', serif; --body:'Work Sans', sans-serif; --mono:'Space Mono', monospace;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+  ::selection{ background:var(--gold); color:#14160F; }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--gold-soft); display:inline-block; }
+  h1,h2,h3{ font-family:var(--display); font-weight:700; margin:0; color:var(--ink); }
+
+  header{ position:sticky; top:0; z-index:50; background:rgba(18,20,14,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:16px 0; }
+  header .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo svg{ width:28px; height:28px; }
+  .logo span{ font-family:var(--display); font-weight:900; font-size:20px; color:var(--ink); }
+  nav.mainnav{ display:flex; gap:26px; flex-wrap:wrap; }
+  nav.mainnav a{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; color:var(--ink-dim); }
+  nav.mainnav a:hover, nav.mainnav a.current{ color:var(--gold); }
+
+  .pagehero{ padding:76px 0 56px; border-bottom:1px solid var(--line); }
+  .pagehero h1{ font-size:clamp(40px,7vw,68px); margin-top:16px; line-height:.95; }
+  .pagehero p{ max-width:640px; margin-top:20px; color:var(--ink-dim); font-size:16.5px; }
+
+  section{ position:relative; }
+  .section-pad{ padding:76px 0; border-bottom:1px solid var(--line); }
+  .section-head{ max-width:680px; margin-bottom:44px; }
+  .section-head h2{ font-size:clamp(28px,4vw,40px); margin-top:14px; line-height:1.08; }
+  .section-head p{ margin-top:16px; color:var(--ink-dim); font-size:15.5px; }
+
+  /* 3 capas */
+  .capas{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .capa{ background:var(--panel); border:1px solid var(--line); padding:26px; }
+  .capa .num{ font-family:var(--mono); color:var(--gold); font-size:12px; letter-spacing:.1em; }
+  .capa h3{ font-size:19px; margin-top:10px; }
+  .capa p{ font-size:14px; color:var(--ink-dim); margin-top:10px; }
+
+  /* niveles de fuente */
+  .niveles{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .nivel{ border:1px solid var(--line); padding:20px; background:var(--panel); }
+  .nivel .badge{ display:inline-block; font-family:var(--mono); font-size:12px; padding:4px 10px; border-radius:2px; margin-bottom:12px; }
+  .nivel.A .badge{ background:color-mix(in srgb, var(--a) 55%, black); color:var(--a-ink); }
+  .nivel.B .badge{ background:color-mix(in srgb, var(--b) 55%, black); color:var(--b-ink); }
+  .nivel.C .badge{ background:color-mix(in srgb, var(--c) 55%, black); color:var(--c-ink); }
+  .nivel.D .badge{ background:color-mix(in srgb, var(--d) 55%, black); color:var(--d-ink); }
+  .nivel h4{ font-family:var(--display); font-size:16px; font-weight:600; margin:0 0 8px; }
+  .nivel p{ font-size:13.5px; color:var(--ink-dim); margin:0; }
+
+  /* 7 formas */
+  .formas{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+  .forma{ border:1px solid var(--line); background:var(--panel); padding:16px 18px; font-size:13.5px; }
+  .forma b{ display:block; font-family:var(--display); font-size:14.5px; color:var(--ink); margin-bottom:4px; }
+  .forma span{ color:var(--ink-dim); }
+
+  /* herramientas */
+  .tools{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+  .tool{ border:1px solid var(--line); background:var(--panel); padding:16px 18px; text-decoration:none; display:flex; flex-direction:column; gap:4px; transition:border-color .2s ease, transform .2s ease; }
+  .tool:hover{ border-color:var(--gold-soft); transform:translateY(-2px); }
+  .tool b{ font-family:var(--display); font-size:15px; }
+  .tool span{ font-family:var(--mono); font-size:11.5px; color:var(--ink-dim); }
+  .note{ font-family:var(--mono); font-size:12px; color:var(--ink-dim); opacity:.75; border-left:2px solid var(--gold-soft); padding-left:12px; margin-top:24px; max-width:760px; }
+
+  /* roles */
+  .roles{ width:100%; border-collapse:collapse; font-size:14px; }
+  .roles th, .roles td{ text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); }
+  .roles th{ font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); }
+  .roles td:first-child{ font-family:var(--display); font-weight:600; }
+
+  /* FORM FICHA */
+  .toolgrid{ display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:start; }
+  .form-panel, .list-panel{ background:var(--panel); border:1px solid var(--line); padding:28px; }
+  .form-panel h3, .list-panel h3{ font-size:19px; margin-bottom:18px; }
+  label{ display:block; font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); margin:16px 0 6px; }
+  label:first-of-type{ margin-top:0; }
+  input[type=text], input[type=date], textarea, select{
+    width:100%; background:var(--bg-soft); border:1px solid var(--line); color:var(--ink);
+    font-family:var(--body); font-size:14.5px; padding:11px 12px; border-radius:2px;
+  }
+  textarea{ resize:vertical; min-height:64px; }
+  input:focus, textarea:focus, select:focus{ border-color:var(--gold-soft); }
+  .radios{ display:flex; gap:18px; margin-top:6px; }
+  .radios label{ display:flex; align-items:center; gap:7px; font-family:var(--body); font-size:14px; text-transform:none; letter-spacing:0; color:var(--ink); margin:0; }
+  .hint{ font-family:var(--body); font-size:12.5px; color:var(--ink-dim); margin-top:6px; }
+  .estado-preview{ margin-top:18px; padding:14px 16px; border:1px dashed var(--gold-soft); font-family:var(--mono); font-size:13px; display:flex; flex-direction:column; gap:4px; }
+  .estado-preview .tag{ font-weight:700; }
+  .estado-preview .tag.ok{ color:#8FD08F; }
+  .estado-preview .tag.warn{ color:#E8C468; }
+  .estado-preview .tag.bad{ color:#E89999; }
+
+  .btn{ font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:13px 22px; border-radius:2px; display:inline-flex; align-items:center; gap:8px; cursor:pointer; border:none; transition:transform .2s ease, background .2s ease; }
+  .btn-solid{ background:var(--gold); color:#17190F; }
+  .btn-solid:hover{ transform:translateY(-2px); background:#DBB25E; }
+  .btn-line{ background:transparent; border:1px solid var(--gold-soft); color:var(--ink); }
+  .btn-line:hover{ border-color:var(--gold); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink-dim); font-size:11px; padding:8px 12px; }
+  .btn-ghost:hover{ border-color:var(--gold-soft); color:var(--ink); }
+  .actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; }
+
+  .filterrow{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .filterrow select{ width:auto; padding:8px 10px; font-size:12.5px; }
+
+  .ficha-item{ border:1px solid var(--line); background:var(--bg-soft); padding:14px 16px; margin-bottom:10px; font-size:13px; }
+  .ficha-item .row1{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+  .ficha-item .afirm{ font-family:var(--display); font-size:14.5px; font-weight:600; line-height:1.3; }
+  .ficha-item .meta{ font-family:var(--mono); font-size:11px; color:var(--ink-dim); margin-top:6px; display:flex; flex-wrap:wrap; gap:10px; }
+  .ficha-item .estado{ font-family:var(--mono); font-size:11px; padding:3px 8px; border-radius:2px; white-space:nowrap; }
+  .estado.ok{ background:color-mix(in srgb, var(--ok) 55%, black); color:#BFE8BF; }
+  .estado.warn{ background:color-mix(in srgb, var(--warn) 55%, black); color:#F1DBA0; }
+  .estado.bad{ background:color-mix(in srgb, var(--bad) 55%, black); color:#F1B8B8; }
+  .ficha-item .del{ background:none; border:none; color:var(--ink-dim); cursor:pointer; font-family:var(--mono); font-size:11px; text-decoration:underline; padding:0; margin-top:8px; }
+  .ficha-item .del:hover{ color:#E89999; }
+  .empty-state{ font-family:var(--mono); font-size:13px; color:var(--ink-dim); padding:20px 0; text-align:center; }
+  #syncNote{ font-family:var(--mono); font-size:11px; color:var(--ink-dim); opacity:.75; margin-bottom:14px; }
+
+  footer{ border-top:1px solid var(--line); padding:44px 0 30px; }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:11px; color:var(--ink-dim); opacity:.75; }
+
+  @media (max-width:900px){
+    .capas{ grid-template-columns:1fr; }
+    .niveles{ grid-template-columns:repeat(2,1fr); }
+    .toolgrid{ grid-template-columns:1fr; }
+    .roles{ font-size:13px; }
+  }
+  @media (max-width:640px){
+    nav.mainnav{ display:none; }
+    .niveles{ grid-template-columns:1fr; }
+    .radios{ flex-direction:column; gap:8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="7" stroke="#C9A24B" stroke-width="1.6"/>
+        <g stroke="#C9A24B" stroke-width="1.6">
+          <line x1="20" y1="2" x2="20" y2="8"/><line x1="20" y1="32" x2="20" y2="38"/>
+          <line x1="2" y1="20" x2="8" y2="20"/><line x1="32" y1="20" x2="38" y2="20"/>
+          <line x1="7" y1="7" x2="11.5" y2="11.5"/><line x1="28.5" y1="28.5" x2="33" y2="33"/>
+          <line x1="33" y1="7" x2="28.5" y2="11.5"/><line x1="11.5" y1="28.5" x2="7" y2="33"/>
+        </g>
+      </svg>
+      <span>ABYA</span>
+    </a>
+    <nav class="mainnav">
+      <a href="index.html">Inicio</a>
+      <a href="index.html#investigaciones">Investigaciones</a>
+      <a href="index.html#podcast">Podcast</a>
+      <a href="index.html#redes">Redes</a>
+      <a href="verificacion.html" class="current">Verificación</a>
+      <a href="panel.html">Panel de contenido</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="pagehero">
+    <div class="wrap">
+      <p class="eyebrow">Protocolo de verificación Abya</p>
+      <h1>Antes de publicar, se verifica</h1>
+      <p>Todo hallazgo pasa por tres capas antes de entrar a Editorial: de dónde viene, si el contenido es auténtico o generado por IA, y si el dato específico es comprobable. Ningún filtro es infalible por sí solo — por eso el protocolo combina heurísticas, herramientas externas y revisión cruzada entre el equipo.</p>
+    </div>
+  </section>
+
+  <!-- 3 CAPAS -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Cómo funciona</p>
+        <h2>Tres capas de verificación</h2>
+      </div>
+      <div class="capas">
+        <div class="capa">
+          <p class="num">01 — Origen</p>
+          <h3>¿De dónde viene y quién lo dice?</h3>
+          <p>Se clasifica la fuente en un nivel de A a D antes de usarla en cualquier investigación. Ver escala más abajo.</p>
+        </div>
+        <div class="capa">
+          <p class="num">02 — Contenido</p>
+          <h3>¿Es auténtico o generado/alterado?</h3>
+          <p>Texto, imagen, video o audio se revisan con herramientas de apoyo (nunca como veredicto único) más señales manuales: metadatos, búsqueda inversa, coherencia de la fuente citada.</p>
+        </div>
+        <div class="capa">
+          <p class="num">03 — Dato</p>
+          <h3>¿La cifra es verificable?</h3>
+          <p>Se contrasta contra al menos una fuente independiente y se registra en la ficha de verificación de la sección de abajo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NIVELES DE FUENTE -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Capa de origen</p>
+        <h2>Escala de confiabilidad de fuentes</h2>
+        <p>Toda fuente que entra a una investigación se clasifica en uno de estos cuatro niveles.</p>
+      </div>
+      <div class="niveles">
+        <div class="nivel A">
+          <span class="badge">Nivel A</span>
+          <h4>Primaria verificable</h4>
+          <p>Documento oficial, dato con metodología pública, entrevista directa, paper revisado por pares. <b>Usar con cita directa.</b></p>
+        </div>
+        <div class="nivel B">
+          <span class="badge">Nivel B</span>
+          <h4>Secundaria confiable</h4>
+          <p>Medio con política editorial transparente y corrección de errores histórica. <b>Contrastar con fuente A si el dato es central.</b></p>
+        </div>
+        <div class="nivel C">
+          <span class="badge">Nivel C</span>
+          <h4>Dudosa</h4>
+          <p>Sin autoría clara, sin fecha, cuenta anónima viral. <b>No usar como base</b>; solo como "esto está circulando" si se va a desmentir.</p>
+        </div>
+        <div class="nivel D">
+          <span class="badge">Nivel D</span>
+          <h4>Culpable / interesada</h4>
+          <p>Conflicto de interés directo en el tema. <b>Señalar el sesgo</b> si se cita; nunca como fuente única.</p>
+        </div>
+      </div>
+      <p class="note">Preguntas rápidas antes de usar cualquier fuente: ¿quién lo publicó originalmente (no quién lo reenvió)? ¿cuándo? ¿el medio/autor existe fuera de esta publicación? ¿el dato aparece en más de una fuente independiente entre sí?</p>
+    </div>
+  </section>
+
+  <!-- 7 FORMAS -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Capa de desinformación</p>
+        <h2>Las 7 formas (First Draft)</h2>
+        <p>Si algo se va a mencionar en un artículo como ejemplo de desinformación, se identifica explícitamente en cuál de estas categorías cae.</p>
+      </div>
+      <div class="formas">
+        <div class="forma"><b>1. Conexión falsa</b><span>El titular no corresponde al contenido.</span></div>
+        <div class="forma"><b>2. Contenido engañoso</b><span>Uso equívoco de información real.</span></div>
+        <div class="forma"><b>3. Contexto falso</b><span>Contenido genuino compartido con contexto falso.</span></div>
+        <div class="forma"><b>4. Contenido impostor</b><span>Suplantación de fuentes genuinas.</span></div>
+        <div class="forma"><b>5. Contenido manipulado</b><span>Información o imagen genuina alterada.</span></div>
+        <div class="forma"><b>6. Contenido fabricado</b><span>100% falso, diseñado para engañar.</span></div>
+        <div class="forma"><b>7. Sátira o parodia</b><span>Sin intención de engañar, pero puede confundirse.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERRAMIENTA INTERACTIVA -->
+  <section class="section-pad" id="ficha">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Herramienta del equipo</p>
+        <h2>Ficha de verificación</h2>
+        <p>Regístrala por cada dato o afirmación central de una investigación. El estado final se sugiere automáticamente según las reglas del protocolo, pero siempre puede ajustarse a criterio de quien verifica.</p>
+      </div>
+
+      <div class="toolgrid">
+        <!-- FORM -->
+        <div class="form-panel">
+          <h3>Nueva ficha</h3>
+
+          <label for="fAfirmacion">Afirmación</label>
+          <textarea id="fAfirmacion" placeholder="La afirmación o dato específico que se está verificando"></textarea>
+
+          <label for="fFuente">Fuente primaria</label>
+          <input type="text" id="fFuente" placeholder="Autor, medio, enlace o documento">
+
+          <label for="fNivel">Nivel de fuente</label>
+          <select id="fNivel">
+            <option value="A">A — Primaria verificable</option>
+            <option value="B">B — Secundaria confiable</option>
+            <option value="C">C — Dudosa</option>
+            <option value="D">D — Culpable / interesada</option>
+          </select>
+
+          <label>¿Contrastada con 2da fuente independiente?</label>
+          <div class="radios">
+            <label><input type="radio" name="fContraste" value="si" checked> Sí</label>
+            <label><input type="radio" name="fContraste" value="no"> No</label>
+          </div>
+
+          <label>¿Sospecha de contenido IA/manipulado?</label>
+          <div class="radios">
+            <label><input type="radio" name="fSospecha" value="no" checked> No</label>
+            <label><input type="radio" name="fSospecha" value="si"> Sí</label>
+          </div>
+          <textarea id="fEvidencia" placeholder="Si hay sospecha: describe la evidencia (metadatos, búsqueda inversa, señales de deepfake, etc.)" style="margin-top:10px; display:none;"></textarea>
+
+          <label for="fCategoria">Categoría de desinformación (si aplica)</label>
+          <select id="fCategoria">
+            <option value="">No aplica</option>
+            <option value="Conexión falsa">1. Conexión falsa</option>
+            <option value="Contenido engañoso">2. Contenido engañoso</option>
+            <option value="Contexto falso">3. Contexto falso</option>
+            <option value="Contenido impostor">4. Contenido impostor</option>
+            <option value="Contenido manipulado">5. Contenido manipulado</option>
+            <option value="Contenido fabricado">6. Contenido fabricado</option>
+            <option value="Sátira o parodia">7. Sátira o parodia</option>
+          </select>
+
+          <label for="fVerificador">Verificado por</label>
+          <select id="fVerificador">
+            <option>Santiago</option>
+            <option>Sof</option>
+            <option>Isa</option>
+            <option>Granados</option>
+            <option>Cielo</option>
+            <option>Otro miembro del equipo</option>
+          </select>
+
+          <label for="fFecha">Fecha</label>
+          <input type="date" id="fFecha">
+
+          <div class="estado-preview" id="estadoPreview">
+            <span>Estado sugerido:</span>
+            <span class="tag ok" id="estadoTag">✅ Verificado</span>
+            <span id="estadoMotivo" class="hint"></span>
+          </div>
+
+          <label for="fEstadoManual">Estado final (puedes ajustarlo)</label>
+          <select id="fEstadoManual">
+            <option value="ok">✅ Verificado</option>
+            <option value="warn">⚠️ Uso con matiz</option>
+            <option value="bad">❌ Descartado</option>
+          </select>
+
+          <div class="actions">
+            <button class="btn btn-solid" id="btnGuardar">Registrar ficha</button>
+            <button class="btn btn-line" id="btnLimpiar" type="button">Limpiar formulario</button>
+          </div>
+        </div>
+
+        <!-- LISTA -->
+        <div class="list-panel">
+          <h3>Fichas registradas</h3>
+          <p id="syncNote">Cargando fichas compartidas del repositorio (fichas.json)…</p>
+
+          <div class="filterrow">
+            <select id="filtroEstado">
+              <option value="todas">Todos los estados</option>
+              <option value="ok">✅ Verificado</option>
+              <option value="warn">⚠️ Uso con matiz</option>
+              <option value="bad">❌ Descartado</option>
+            </select>
+            <select id="filtroNivel">
+              <option value="todas">Todos los niveles</option>
+              <option value="A">Nivel A</option>
+              <option value="B">Nivel B</option>
+              <option value="C">Nivel C</option>
+              <option value="D">Nivel D</option>
+            </select>
+          </div>
+
+          <div id="listaFichas"></div>
+
+          <div class="actions">
+            <button class="btn btn-line" id="btnExportarJSON">Exportar fichas.json</button>
+            <button class="btn btn-ghost" id="btnExportarCSV" type="button">Exportar CSV</button>
+            <button class="btn btn-ghost" id="btnVaciar" type="button">Vaciar registradas en este navegador</button>
+          </div>
+          <p class="note">Las fichas nuevas se guardan primero solo en este navegador. Para que todo el equipo las vea, exporta <b>fichas.json</b> y súbelo (reemplázalo) en la raíz del repositorio de GitHub — así queda como registro compartido y con historial de cambios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Equipo</p>
+        <h2>Reparto por rol</h2>
+        <p>Regla de doble verificación: ningún dato central pasa a Producción/Diseño sin que lo revise alguien distinto de quien lo encontró.</p>
+      </div>
+      <table class="roles">
+        <tr><th>Rol</th><th>Foco de verificación</th></tr>
+        <tr><td>Sof — Política</td><td>Declaraciones de actores políticos, sesgo institucional, fuentes nivel D</td></tr>
+        <tr><td>Isa — Feminismo, minorías y derecho</td><td>Marco legal citado, estadísticas de género/derechos, terminología correcta</td></tr>
+        <tr><td>Granados — Historia</td><td>Datos y fechas históricas, contexto temporal, contenido reciclado de otro año</td></tr>
+        <tr><td>Cielo — Psicología</td><td>Afirmaciones sobre salud mental/comportamiento — exige fuente académica revisada</td></tr>
+        <tr><td>Santiago — Conflicto</td><td>Coordinación general del protocolo, cruce final antes de Editorial</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- HERRAMIENTAS -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Referencia</p>
+        <h2>Herramientas externas de apoyo</h2>
+        <p>Se usan como indicio adicional, nunca como veredicto único.</p>
+      </div>
+      <div class="tools">
+        <a class="tool" href="https://maldita.es" target="_blank" rel="noopener"><b>Maldita.es</b><span>Verificador — España</span></a>
+        <a class="tool" href="https://www.newtral.es" target="_blank" rel="noopener"><b>Newtral</b><span>Verificador — España</span></a>
+        <a class="tool" href="https://factual.afp.com" target="_blank" rel="noopener"><b>AFP Factual</b><span>Verificador internacional</span></a>
+        <a class="tool" href="https://verifica.efe.com" target="_blank" rel="noopener"><b>EFE Verifica</b><span>Verificador — España/LatAm</span></a>
+        <a class="tool" href="https://chequeado.com" target="_blank" rel="noopener"><b>Chequeado</b><span>Verificador — LatAm</span></a>
+        <a class="tool" href="https://toolbox.google.com/factcheck/explorer" target="_blank" rel="noopener"><b>Google Fact Check Explorer</b><span>Buscador agregado</span></a>
+      </div>
+      <p class="note">En 2025 Meta cerró su programa de fact-checking en EE. UU., y organizaciones como LatamChequea han señalado que sistemas tipo "Notas de la Comunidad" no reemplazan la verificación profesional. Por eso Abya mantiene este protocolo propio en vez de depender solo de las plataformas.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Proyecto ABYA — Protocolo de verificación interno.</span>
+    <span><a href="index.html">Volver al inicio</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const LS_KEY = 'abya_fichas_local_v1';
+  let fichasRemotas = [];   // vienen de fichas.json (repo)
+  let fichasLocales = [];   // guardadas en este navegador
+
+  const $ = (id) => document.getElementById(id);
+  const fFecha = $('fFecha');
+  fFecha.value = new Date().toISOString().slice(0,10);
+
+  // ---- sospecha IA: mostrar textarea de evidencia ----
+  document.querySelectorAll('input[name=fSospecha]').forEach(r=>{
+    r.addEventListener('change', ()=>{
+      $('fEvidencia').style.display = (document.querySelector('input[name=fSospecha]:checked').value === 'si') ? 'block' : 'none';
+      actualizarPreview();
+    });
+  });
+  document.querySelectorAll('input[name=fContraste]').forEach(r=> r.addEventListener('change', actualizarPreview));
+  $('fNivel').addEventListener('change', actualizarPreview);
+
+  function sugerirEstado(nivel, contrastada, sospecha){
+    if (sospecha === 'si') {
+      return { estado:'bad', tag:'❌ Descartado', motivo:'Contenido con sospecha de IA/manipulación sin evidencia que la descarte: se marca como origen no verificado.' };
+    }
+    if (nivel === 'D') {
+      return contrastada === 'si'
+        ? { estado:'warn', tag:'⚠️ Uso con matiz', motivo:'Fuente con conflicto de interés (D): puede citarse señalando el sesgo, respaldada por una fuente independiente.' }
+        : { estado:'bad', tag:'❌ Descartado', motivo:'Fuente nivel D sin contraste independiente: no se puede usar como fuente única.' };
+    }
+    if (nivel === 'C') {
+      return { estado:'warn', tag:'⚠️ Uso con matiz', motivo:'Fuente dudosa (C): no usar como base factual; solo mencionar como "esto está circulando" si se va a desmentir.' };
+    }
+    if (nivel === 'B' && contrastada === 'no') {
+      return { estado:'warn', tag:'⚠️ Uso con matiz', motivo:'Fuente secundaria (B) sin contraste: válida, pero se recomienda cruzar con una fuente A si el dato es central.' };
+    }
+    return { estado:'ok', tag:'✅ Verificado', motivo:'Fuente confiable, contrastada y sin señales de manipulación.' };
+  }
+
+  function actualizarPreview(){
+    const nivel = $('fNivel').value;
+    const contrastada = document.querySelector('input[name=fContraste]:checked').value;
+    const sospecha = document.querySelector('input[name=fSospecha]:checked').value;
+    const s = sugerirEstado(nivel, contrastada, sospecha);
+    const tagEl = $('estadoTag');
+    tagEl.textContent = s.tag;
+    tagEl.className = 'tag ' + s.estado;
+    $('estadoMotivo').textContent = s.motivo;
+    $('fEstadoManual').value = s.estado;
+  }
+  actualizarPreview();
+
+  // ---- cargar fichas.json del repo (si existe y se sirve por http) ----
+  fetch('fichas.json').then(r => r.ok ? r.json() : []).then(data => {
+    fichasRemotas = Array.isArray(data) ? data : [];
+    $('syncNote').textContent = fichasRemotas.length
+      ? `Fichas compartidas cargadas desde fichas.json: ${fichasRemotas.length}.`
+      : 'No se encontró fichas.json en el repositorio todavía (normal si es la primera vez).';
+    render();
+  }).catch(() => {
+    $('syncNote').textContent = 'No se pudo cargar fichas.json (normal si estás abriendo el archivo directamente desde tu computador en vez de por GitHub Pages).';
+    render();
+  });
+
+  // ---- localStorage ----
+  function cargarLocales(){
+    try{ fichasLocales = JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch(e){ fichasLocales = []; }
+  }
+  function guardarLocales(){ localStorage.setItem(LS_KEY, JSON.stringify(fichasLocales)); }
+  cargarLocales();
+
+  function todasLasFichas(){
+    return [...fichasRemotas, ...fichasLocales];
+  }
+
+  function render(){
+    const lista = $('listaFichas');
+    const fEstado = $('filtroEstado').value;
+    const fNivel = $('filtroNivel').value;
+    const datos = todasLasFichas()
+      .filter(f => fEstado === 'todas' || f.estado === fEstado)
+      .filter(f => fNivel === 'todas' || f.nivel === fNivel)
+      .sort((a,b) => (b.fecha||'').localeCompare(a.fecha||''));
+
+    if (!datos.length){
+      lista.innerHTML = '<p class="empty-state">Aún no hay fichas registradas con estos filtros.</p>';
+      return;
+    }
+
+    lista.innerHTML = datos.map(f => `
+      <div class="ficha-item">
+        <div class="row1">
+          <div class="afirm">${escapeHtml(f.afirmacion || '(sin descripción)')}</div>
+          <span class="estado ${f.estado}">${estadoLabel(f.estado)}</span>
+        </div>
+        <div class="meta">
+          <span>Nivel ${f.nivel}</span>
+          <span>${f.verificador || '—'}</span>
+          <span>${f.fecha || '—'}</span>
+          ${f.categoria ? `<span>${f.categoria}</span>` : ''}
+          ${f.local ? '<span>guardada localmente</span>' : '<span>del repositorio</span>'}
+        </div>
+        ${f.local ? `<button class="del" data-id="${f.id}">Eliminar</button>` : ''}
+      </div>
+    `).join('');
+
+    lista.querySelectorAll('.del').forEach(btn=>{
+      btn.addEventListener('click', () => {
+        fichasLocales = fichasLocales.filter(x => x.id !== btn.dataset.id);
+        guardarLocales();
+        render();
+      });
+    });
+  }
+
+  function estadoLabel(e){ return e==='ok' ? '✅ Verificado' : e==='warn' ? '⚠️ Uso con matiz' : '❌ Descartado'; }
+  function escapeHtml(s){ const d=document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  $('filtroEstado').addEventListener('change', render);
+  $('filtroNivel').addEventListener('change', render);
+
+  $('btnGuardar').addEventListener('click', () => {
+    const afirmacion = $('fAfirmacion').value.trim();
+    if (!afirmacion){ $('fAfirmacion').focus(); return; }
+    const ficha = {
+      id: 'f_' + Date.now(),
+      afirmacion,
+      fuente: $('fFuente').value.trim(),
+      nivel: $('fNivel').value,
+      contrastada: document.querySelector('input[name=fContraste]:checked').value,
+      sospecha: document.querySelector('input[name=fSospecha]:checked').value,
+      evidencia: $('fEvidencia').value.trim(),
+      categoria: $('fCategoria').value,
+      verificador: $('fVerificador').value,
+      fecha: $('fFecha').value,
+      estado: $('fEstadoManual').value,
+      local: true
+    };
+    fichasLocales.push(ficha);
+    guardarLocales();
+    render();
+    limpiarForm();
+  });
+
+  function limpiarForm(){
+    $('fAfirmacion').value = '';
+    $('fFuente').value = '';
+    $('fNivel').value = 'A';
+    $('fEvidencia').value = '';
+    $('fEvidencia').style.display = 'none';
+    $('fCategoria').value = '';
+    document.querySelector('input[name=fContraste][value=si]').checked = true;
+    document.querySelector('input[name=fSospecha][value=no]').checked = true;
+    fFecha.value = new Date().toISOString().slice(0,10);
+    actualizarPreview();
+  }
+  $('btnLimpiar').addEventListener('click', limpiarForm);
+
+  $('btnVaciar').addEventListener('click', () => {
+    if (!confirm('¿Eliminar todas las fichas guardadas en este navegador? Esto no afecta fichas.json del repositorio.')) return;
+    fichasLocales = [];
+    guardarLocales();
+    render();
+  });
+
+  function descargar(nombre, contenido, tipo){
+    const blob = new Blob([contenido], { type: tipo });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = nombre;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  $('btnExportarJSON').addEventListener('click', () => {
+    const combinado = todasLasFichas().map(({local, ...resto}) => resto);
+    descargar('fichas.json', JSON.stringify(combinado, null, 2), 'application/json');
+  });
+
+  $('btnExportarCSV').addEventListener('click', () => {
+    const filas = todasLasFichas();
+    const cabeceras = ['fecha','afirmacion','fuente','nivel','contrastada','sospecha','categoria','verificador','estado'];
+    const csv = [cabeceras.join(',')].concat(
+      filas.map(f => cabeceras.map(c => `"${String(f[c] ?? '').replace(/"/g,'""')}"`).join(','))
+    ).join('\n');
+    descargar('fichas.csv', csv, 'text/csv');
+  });
+})();
+</script>
+
+</body>
+</html>
