@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inteligencia artificial, poder político y manipulación de masas — ABYA</title>
+<meta name="description" content="Investigación de ABYA sobre inteligencia artificial, poder político y manipulación de masas: los casos de Colombia 2026, la guerra con Irán y el choque Anthropic-Trump.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12140E; --bg-soft:#191C13; --panel:#1D2117; --ink:#EFE6CF; --ink-dim:#A79C82;
+    --gold:#C9A24B; --gold-soft:#8A7440; --line:#33362B;
+    --politica:#1B3550; --politica-ink:#A9C6DE;
+    --display:'Fraunces', serif; --body:'Work Sans', sans-serif; --mono:'Space Mono', monospace;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+  .readwrap{ max-width:760px; margin:0 auto; padding:0 28px; }
+  ::selection{ background:var(--gold); color:#14160F; }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--gold-soft); display:inline-block; }
+  h1,h2,h3{ font-family:var(--display); font-weight:700; margin:0; color:var(--ink); }
+
+  header{ position:sticky; top:0; z-index:50; background:rgba(18,20,14,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:16px 0; }
+  header .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo svg{ width:28px; height:28px; }
+  .logo span{ font-family:var(--display); font-weight:900; font-size:20px; color:var(--ink); }
+  nav.mainnav{ display:flex; gap:26px; flex-wrap:wrap; }
+  nav.mainnav a{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; color:var(--ink-dim); }
+  nav.mainnav a:hover{ color:var(--gold); }
+
+  /* Article hero */
+  .pagehero{ padding:70px 0 40px; border-bottom:1px solid var(--line); }
+  .tag-politica{ display:inline-block; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; padding:5px 12px; border-radius:2px; background:color-mix(in srgb, var(--politica) 55%, black); color:var(--politica-ink); margin-bottom:18px; }
+  .pagehero h1{ font-size:clamp(30px,5vw,50px); line-height:1.05; }
+  .byline{ margin-top:20px; font-family:var(--mono); font-size:12.5px; color:var(--ink-dim); display:flex; gap:16px; flex-wrap:wrap; }
+  .byline b{ color:var(--ink); font-weight:700; }
+
+  /* Article body */
+  article{ padding:48px 0 30px; }
+  article p{ margin:0 0 20px; font-size:17px; color:#E7DCC4; }
+  article h2{ font-family:var(--display); font-size:26px; margin:44px 0 6px; line-height:1.15; }
+  article h2 .num{ font-family:var(--mono); font-size:13px; color:var(--gold); display:block; margin-bottom:6px; letter-spacing:.08em; }
+  article h3{ font-family:var(--display); font-weight:600; font-size:19px; margin:30px 0 4px; color:var(--gold); }
+  article ul{ margin:0 0 22px; padding-left:0; list-style:none; }
+  article ul li{ position:relative; padding-left:22px; margin-bottom:12px; font-size:16px; color:#E7DCC4; }
+  article ul li::before{ content:""; position:absolute; left:2px; top:12px; width:7px; height:7px; background:var(--gold-soft); border-radius:50%; }
+  .lead{ font-size:19px !important; color:var(--ink) !important; border-left:2px solid var(--gold-soft); padding-left:20px; }
+  .callout{ background:var(--panel); border:1px solid var(--line); border-left:2px solid var(--gold-soft); padding:20px 22px; margin:26px 0; font-size:15.5px; color:var(--ink-dim); }
+  .callout b{ color:var(--ink); }
+
+  .biblio{ margin-top:40px; border-top:1px solid var(--line); padding-top:30px; }
+  .biblio h2{ margin-top:0; }
+  .biblio .group{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); margin:24px 0 10px; }
+  .biblio ol{ margin:0; padding-left:20px; }
+  .biblio li{ margin-bottom:14px; font-size:14px; color:var(--ink-dim); line-height:1.5; }
+  .biblio a{ color:var(--politica-ink); word-break:break-word; }
+
+  .backbar{ margin:0 0 10px; }
+  .btn{ font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:12px 20px; border-radius:2px; display:inline-flex; align-items:center; gap:8px; border:1px solid var(--gold-soft); color:var(--ink); transition:border-color .2s ease, transform .2s ease; }
+  .btn:hover{ border-color:var(--gold); transform:translateY(-2px); }
+  .btn-solid{ background:var(--gold); color:#17190F; border:none; }
+  .btn-solid:hover{ background:#DBB25E; }
+
+  .article-foot{ margin-top:50px; padding-top:30px; border-top:1px solid var(--line); display:flex; gap:14px; flex-wrap:wrap; }
+
+  footer{ border-top:1px solid var(--line); padding:44px 0 30px; margin-top:40px; }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:11px; color:var(--ink-dim); opacity:.75; }
+
+  @media (max-width:640px){
+    nav.mainnav{ display:none; }
+    article p{ font-size:16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="7" stroke="#C9A24B" stroke-width="1.6"/>
+        <g stroke="#C9A24B" stroke-width="1.6">
+          <line x1="20" y1="2" x2="20" y2="8"/><line x1="20" y1="32" x2="20" y2="38"/>
+          <line x1="2" y1="20" x2="8" y2="20"/><line x1="32" y1="20" x2="38" y2="20"/>
+          <line x1="7" y1="7" x2="11.5" y2="11.5"/><line x1="28.5" y1="28.5" x2="33" y2="33"/>
+          <line x1="33" y1="7" x2="28.5" y2="11.5"/><line x1="11.5" y1="28.5" x2="7" y2="33"/>
+        </g>
+      </svg>
+      <span>ABYA</span>
+    </a>
+    <nav class="mainnav">
+      <a href="index.html">Inicio</a>
+      <a href="index.html#investigaciones">Investigaciones</a>
+      <a href="index.html#podcast">Podcast</a>
+      <a href="index.html#redes">Redes</a>
+      <a href="verificacion.html">Verificación</a>
+      <a href="panel.html">Panel de contenido</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="pagehero">
+    <div class="readwrap">
+      <p class="backbar"><a class="eyebrow" href="index.html#investigaciones" style="text-decoration:none;">← Volver al archivo</a></p>
+      <span class="tag-politica">Política</span>
+      <h1>Inteligencia artificial, poder político y manipulación de masas</h1>
+      <div class="byline">
+        <span>Investigación de <b>Santiago Álvarez Saboyá</b></span>
+        <span>Centro de investigación ABYA</span>
+      </div>
+    </div>
+  </section>
+
+  <article>
+    <div class="readwrap">
+
+      <p class="lead">La inteligencia artificial dejó de ser una herramienta técnica al margen de la política para convertirse en una pieza central de cómo se ejerce, se disputa y se legitima el poder hoy. No es solo que la IA pueda generar textos, imágenes o videos falsos —eso ya lo hacía la propaganda mucho antes de que existiera esta tecnología—; lo que cambió es la escala, la velocidad y la opacidad con que estas herramientas ahora deciden qué vemos, a quién le creemos y, en los casos más extremos, a quién se ataca.</p>
+
+      <p>En 2026 esto ya no es hipótesis: una campaña presidencial en Colombia se construyó sobre redes de cuentas coordinadas y contenido sintético; una plataforma de inteligencia artificial ayudó a definir objetivos militares en un conflicto internacional; y gobiernos y empresas se disputan públicamente quién tiene la autoridad para decidir qué puede y qué no puede hacer un modelo de IA. Por eso, entender la inteligencia artificial ya no es un tema exclusivo de la tecnología: es una condición necesaria para entender la política contemporánea, porque quien controla estos sistemas —y las salvaguardas que los limitan o no— está, de facto, participando en la definición de resultados electorales, en la conducción de guerras y en la forma en que las sociedades acceden a la verdad.</p>
+
+      <h2><span class="num">01</span>Marco: la IA como arma de poder, no solo como herramienta de campaña</h2>
+      <p>El 2026 obliga a correr el eje: la pregunta política real no es si la IA inventa mentiras, sino quién la controla y para qué proyecto de poder la despliega — ya sea para ganar una presidencia, deslegitimar prensa crítica, o decidir a quién ataca un ejército. Los tres casos de esta investigación (Colombia, el conflicto con Irán, y el choque Anthropic-Trump) comparten un patrón: gobiernos y campañas de derecha que usan sistemas de IA como infraestructura de poder, mientras cuestionan o atacan a las instituciones —prensa, verificadores, empresas de IA con salvaguardas— que intentan ponerles límites.</p>
+
+      <h2><span class="num">02</span>La "elección de la IA" que no fue: Estados Unidos 2024</h2>
+      <p>En 2024, medios y expertos anticipaban que la inteligencia artificial generativa definiría el resultado electoral en Estados Unidos. La realidad fue más matizada: analistas de NYU Stern y Purdue coincidieron en que la IA generativa no fue determinante. La desinformación más viral —sobre el conteo de votos, el voto por correo y las máquinas electorales— se apoyó en técnicas tradicionales. La función principal de la IA no fue inventar mentiras nuevas, sino amplificar narrativas ya existentes: tras la falsa acusación de que migrantes haitianos en Springfield, Ohio, comían mascotas, circularon imágenes generadas por IA de Trump "rescatando" animales, que él mismo compartió.</p>
+
+      <h2><span class="num">03</span>El giro 2025–2026: cuando la política decide qué IA existe</h2>
+      <p>El caso Anthropic ilustra el eje político-regulatorio de esta investigación. La administración Trump etiquetó a Anthropic como "riesgo en la cadena de suministro" tras su negativa a levantar salvaguardas de uso militar sin restricciones para el Pentágono. En junio de 2026, el Departamento de Comercio suspendió temporalmente el acceso a sus modelos más avanzados (Fable 5 y Mythos 5), oficialmente por preocupaciones de ciberseguridad; la suspensión se levantó a finales de ese mismo mes. El conflicto se enmarca en un choque más amplio entre la Casa Blanca y los laboratorios de IA sobre salvaguardas para uso militar y de vigilancia.</p>
+
+      <h2><span class="num">04</span>Colombia 2026: el caso De la Espriella</h2>
+
+      <h3>4.1 El resultado</h3>
+      <p>Abelardo de la Espriella (movimiento Defensores de la Patria), abogado sin trayectoria política previa y ciudadano naturalizado estadounidense desde 2023, ganó la segunda vuelta presidencial el 21 de junio de 2026 con 49,66% de los votos frente a Iván Cepeda, en una elección con 63,6% de participación. Javier Milei lo felicitó públicamente enmarcando el triunfo como el avance de "la libertad" en la región. Su programa combina ajuste fiscal, desregulación, mano dura contra el narcotráfico y una promesa explícita de incorporar IA y blockchain a la gestión pública.</p>
+
+      <h3>4.2 Financiación: de "sin plata de nadie" a los créditos bancarios</h3>
+      <p>De la Espriella construyó su narrativa de outsider sobre la promesa de no recibir financiación privada ni de partidos. Los reportes entregados al Consejo Nacional Electoral (CNE) muestran otra cosa: entre marzo y mayo de 2026 gastó 26.087 millones de pesos (cerca del 70% del tope legal para primera vuelta), financiados enteramente por cuatro créditos bancarios —Banco de Bogotá, BBVA y dos con Bancolombia, por un total de 36.000 millones—. El reporte no registra donaciones de particulares ni aportes de su propio patrimonio, pese a que ese fue su discurso inicial. Fue la campaña con mayor gasto reportado de toda la contienda, el doble que su rival más cercana, Paloma Valencia.</p>
+      <p>Del gasto de administración, casi la mitad (2.894 millones de pesos) fue a Estrategia y Poder, la firma del estratega Carlos Suárez, hombre cercano al candidato que terminó en el centro de una disputa pública con el uribismo por presuntamente coordinar contenido de ataque contra otras campañas de derecha.</p>
+
+      <h3>4.3 La maquinaria digital: bodegas, IA generativa y microtargeting</h3>
+      <ul>
+        <li><b>Contenido generado por IA contra otra candidata de derecha:</b> según Cambio, decenas de piezas virales —en su mayoría producidas con IA— circularon en cuentas afines a De la Espriella para atacar a Paloma Valencia, su competencia más cercana dentro del propio espectro de derecha.</li>
+        <li><b>Redes coordinadas de amplificación ("bodegas"):</b> La Silla Vacía, junto con LatamChequea, detectó 2.300 cuentas organizadas en 22 comunidades anómalas que entre febrero y abril de 2026 generaron 11.715 comentarios de apoyo a los tres candidatos punteros — el 12% de toda la conversación en sus publicaciones en ese período. Un análisis de la Liga contra el Silencio sobre 35.175 publicaciones encontró que solo el 0,5% eran contenido original.</li>
+        <li><b>Recolección de datos personales vía publicidad:</b> el blog Hyperconectado documentó 600 anuncios simultáneos en Google Ads que dirigían a formularios pidiendo nombre completo, edad, correo, WhatsApp y ubicación.</li>
+        <li><b>Gasto en pauta digital:</b> entre el 50% y el 60% del gasto de campaña fue a distribución digital, usando sistemas de segmentación algorítmica para maximizar alcance a menor costo por clic. Cepeda invirtió, según esas estimaciones, apenas una fracción de esa cifra.</li>
+      </ul>
+
+      <h3>4.4 La disputa sobre el resultado: acusaciones de fraude con IA</h3>
+      <p>Tras la derrota, el presidente saliente Gustavo Petro acusó públicamente a "empresas extranjeras" de haber usado inteligencia artificial y "robots informáticos" —medio millón, según su cifra— para inclinar el resultado. Medios que cubrieron la declaración (Infobae) la enmarcan explícitamente como una "ya desmentida teoría de fraude electoral": una afirmación no corroborada de forma independiente, proveniente de un actor con interés político directo. Por separado, Iván Cepeda acusó a la campaña de De la Espriella de usar IA para "manipular votantes", sin aportar evidencia técnica más allá de lo ya documentado sobre bodegas y contenido sintético.</p>
+
+      <h3>4.5 El patrón: atacar a la prensa que investiga</h3>
+      <p>De la Espriella respondió a las investigaciones de La Silla Vacía acusándola de integrar una supuesta "Operación Júpiter" financiada por George Soros y Open Society. La Silla Vacía rechazó públicamente la acusación, señalando que no recibe financiación de esas fuentes desde hace años, y comparó el libreto con el usado por gobiernos como los de Bukele, Díaz-Canel u Ortega contra prensa independiente.</p>
+
+      <h2><span class="num">05</span>La sistematización de la guerra: IA y el asesinato del ayatolá Jamenei</h2>
+
+      <h3>5.1 Contexto</h3>
+      <p>La guerra entre Estados Unidos/Israel e Irán comenzó el 28 de febrero de 2026 con bombardeos sorpresa mientras había negociaciones diplomáticas en curso. Irán respondió con misiles y drones contra Israel y bases estadounidenses en el Golfo, y cerró parcialmente el estrecho de Ormuz. El ataque inicial mató al líder supremo iraní, el ayatolá Alí Jamenei.</p>
+
+      <h3>5.2 Cómo funcionó la plataforma de IA</h3>
+      <ul>
+        <li>Israel desarrolló una plataforma de inteligencia artificial clasificada que procesa espionaje humano, ciberataques (cámaras de tráfico de Teherán, infraestructura de pago, redes de vigilancia) y años de trabajo conjunto del Mosad y la Unidad 8200.</li>
+        <li>Esta plataforma detectó patrones de movimiento del círculo cercano de Jamenei y permitió prever que se reunirían en su complejo residencial la madrugada del 28 de febrero, lo que desencadenó el ataque que lo mató.</li>
+        <li>En las primeras 48 horas de la ofensiva se identificaron y atacaron más de mil objetivos, un ritmo que en conflictos anteriores habría tomado días.</li>
+        <li>Israel afirma haber asesinado a más de 250 altos cargos iraníes con esta combinación de espionaje e IA; expertos como Ariel Levite (Carnegie) describen el paso de las "decapitaciones" selectivas de "necesidad operacional ocasional" a la base misma de la estrategia militar israelí.</li>
+      </ul>
+
+      <h3>5.3 El papel de Claude (Anthropic)</h3>
+      <p>Según un reporte de CBS News citando fuentes del Pentágono, el ejército estadounidense empleó el modelo Claude, de Anthropic, en el marco del ataque contra Irán, y continuó usándolo después. Esto conecta con el caso de la sección 3: Anthropic mantiene un contrato de 200 millones de dólares con el Departamento de Guerra y se negó a levantar salvaguardas para uso letal autónomo o vigilancia masiva sin restricción, lo que motivó el choque público con la administración Trump. Independientemente de ese conflicto, fuentes del Pentágono confirman que Claude sí fue usado en el contexto de esta ofensiva, dentro de los límites contractuales vigentes.</p>
+
+      <h3>5.4 Las advertencias</h3>
+      <p>El relator especial de la ONU, Balakrishnan Rajagopal, cuestionó públicamente "las nuevas formas en que se libran las guerras", señalando que una plataforma de IA fue usada para seleccionar objetivos y coordenadas geográficas en la ofensiva contra Irán — un patrón que, dijo, ya se había visto en Gaza. Medios como EFE y SWI documentaron preocupación de expertos por el riesgo de que la IA opere "sin supervisión humana" en algunos casos, lo que habría llevado a la selección de objetivos erróneos. No encontramos, hasta el cierre de esta investigación, una cifra verificada de víctimas civiles atribuibles a errores algorítmicos específicos: se trata de una preocupación documentada por fuentes serias, no de un hecho ya cuantificado.</p>
+
+      <h2><span class="num">06</span>Lo que conecta los tres casos</h2>
+      <ul>
+        <li><b>Colombia</b> muestra cómo la IA generativa y la amplificación algorítmica se volvieron infraestructura estándar de una campaña de derecha ganadora, incluso en disputas internas dentro de la propia derecha.</li>
+        <li><b>Irán</b> muestra el otro extremo del mismo fenómeno: la IA no solo produce contenido persuasivo, sino que participa en decisiones militares en tiempo real, con un nivel de opacidad que hace casi imposible la rendición de cuentas pública.</li>
+        <li><b>Anthropic-Trump</b> conecta ambos frentes: el control político sobre qué modelos de IA existen, y bajo qué salvaguardas, es hoy un campo de disputa activo entre gobiernos con proyectos de poder de corte nacionalista/conservador y las empresas que construyen estas herramientas.</li>
+      </ul>
+      <p class="lead">El patrón común para la línea editorial de Abya: la pregunta ya no es "¿la IA miente?", sino "¿quién decide qué puede hacer la IA, y a quién beneficia esa decisión?".</p>
+
+      <!-- BIBLIOGRAFÍA -->
+      <div class="biblio">
+        <h2><span class="num">07</span>Bibliografía comprobable</h2>
+        <p style="font-size:14.5px; color:var(--ink-dim);">Todas las fuentes listadas fueron consultadas directamente (acceso el 14 de julio de 2026) y los enlaces corresponden a las URL reales de origen. Donde el acceso directo estuvo bloqueado (El País), se indica explícitamente y se listan las fuentes secundarias usadas para reconstruir los hechos.</p>
+
+        <p class="group">Estados Unidos, IA electoral y Anthropic-Trump</p>
+        <ol>
+          <li>Almirall, E. (2024). La inteligencia artificial y las elecciones en los Estados Unidos. Esade. <a href="https://www.esade.edu/es/articulos/la-inteligencia-artificial-y-las-elecciones-en-los-estados-unidos" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Tuquero, L. / PolitiFact (2024). Did artificial intelligence shape the 2024 US election? Al Jazeera. <a href="https://www.aljazeera.com/news/2024/12/25/did-artificial-intelligence-shape-the-2024-us-election" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Papageorgiou, M. Social Media, Disinformation, and AI. SAIS Review, Johns Hopkins. <a href="https://saisreview.sais.jhu.edu/social-media-disinformation-and-ai-transforming-the-landscape-of-the-2024-u-s-presidential-political-campaigns/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>El País (2026). A Anthropic le sale rentable ser la IA antagonista de Donald Trump. [Acceso directo bloqueado; reconstruido con fuentes secundarias.]</li>
+          <li>Cadena 3 (2026). El conflicto entre Anthropic y el gobierno de Trump podría beneficiarlo. <a href="https://www.cadena3.com/noticia/tecnologia/el-conflicto-entre-anthropic-y-el-gobierno-de-trump-podria-beneficiarlo-segun-datos_563239" target="_blank" rel="noopener">Enlace</a></li>
+          <li>DiarioBitcoin (2026). Anthropic choca con Trump y paga el precio en la guerra política de la IA. <a href="https://www.diariobitcoin.com/regulacion/anthropic-choca-con-trump-y-paga-el-precio-en-la-guerra-politica-de-la-ia/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>eldiario.es (2026). Qué es Anthropic, la startup que planta cara a Trump. <a href="https://www.eldiario.es/tecnologia/anthropic-startup-planta-cara-trump-estilo-dictador-ia-guerra_1_13045909.html" target="_blank" rel="noopener">Enlace</a></li>
+          <li>El Economista (2026). Trump golpea a Anthropic y pone en duda las valuaciones récord de la IA. <a href="https://eleconomista.com.ar/internacional/trump-golpea-anthropic-pone-duda-valuaciones-record-inteligencia-artificial-n95757" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Revista Raya (2026). Inteligencia artificial y redes sociales: ¿quién controla la maquinaria que moldea la opinión pública? <a href="https://revistaraya.com/inteligencia-artificial-y-redes-sociales-quien-controla-la-maquinaria-que-moldea-opinion-publica.html" target="_blank" rel="noopener">Enlace</a></li>
+          <li>García de Viedma, D. (2025). Nepal elige a su primera ministra en Discord. Real Instituto Elcano. <a href="https://www.realinstitutoelcano.org/analisis/nepal-elige-a-su-primera-ministra-en-discord-lo-que-revela-sobre-redes-y-democracia/" target="_blank" rel="noopener">Enlace</a></li>
+        </ol>
+
+        <p class="group">Colombia — elecciones presidenciales 2026 y campaña de De la Espriella</p>
+        <ol>
+          <li>La Silla Vacía. Sin reglas claras, la IA podría influir en las elecciones presidenciales. <a href="https://www.lasillavacia.com/silla-academica/sin-reglas-claras-la-ia-podria-influir-en-las-elecciones-presidenciales/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Chequeado (2026). Elecciones en Colombia 2026: De la Espriella y Cepeda. <a href="https://chequeado.com/el-explicador/elecciones-en-colombia-2026-que-proponen-de-la-espriella-y-cepeda-de-cara-a-la-segunda-vuelta/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Cambio Colombia (2026). Plan de gobierno de Abelardo de la Espriella. <a href="https://cambiocolombia.com/analisis-programa-gobierno-abelardo-espriella-propuestas-viabilidad-elecciones" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Muñoz, M. / Cambio Colombia (2026). Las cuentas de Abelardo: radiografía a los 26.087 millones. <a href="https://cambiocolombia.com/poder/articulo/2026/5/las-cuentas-de-abelardo-radiografia-a-los-12458-millones-de-pesos-que-ha-gastado-en-la-campana" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Pulzo (2026). Cepeda señaló a De la Espriella de usar IA para manipular votantes. <a href="https://www.pulzo.com/elecciones-colombia-2026/cepeda-senalo-espriella-usar-ia-para-manipular-votantes-elecciones-PP5226696" target="_blank" rel="noopener">Enlace</a></li>
+          <li>La Silla Vacía (2026). El candidato de la "IA": Abelardo de la Espriella. <a href="https://www.lasillavacia.com/opinion/el-candidato-de-la-ia-abelardo-de-la-espriella/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Wikipedia. Abelardo de la Espriella. <a href="https://en.wikipedia.org/wiki/Abelardo_de_la_Espriella" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Infobae (2026). Gustavo Petro insistió en que "robots informáticos" le dieron la victoria. <a href="https://www.infobae.com/colombia/2026/07/13/gustavo-petro-insistio-en-que-robots-informaticos-le-dieron-la-victoria-a-de-la-espriella-es-la-destruccion-del-programa-de-la-vida/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>La Silla Vacía. La campaña digital puso a De la Espriella en la presidencia. <a href="https://www.lasillavacia.com/red-de-expertos/red-de-democracia-y-tecnologia/la-campana-digital-puso-a-de-la-espriella-en-la-presidencia-de-colombia/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Chequeado / LatamChequea (2026). Ninguno se salva en Colombia. <a href="https://chequeado.com/investigaciones/ninguno-se-salva-hay-bodegas-con-de-la-espriella-paloma-y-cepeda/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>La Silla Vacía (2026). Ninguno se salva: hay bodegas con De la Espriella, Paloma y Cepeda. <a href="https://www.lasillavacia.com/silla-nacional/ninguno-se-salva-hay-bodegas-con-de-la-espriella-paloma-y-cepeda/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>La Silla Vacía (2026). El pequeño Abelardo te está mirando. <a href="https://www.lasillavacia.com/opinion/el-pequeno-abelardo-te-esta-mirando-o-como-la-empresa-electoral-de-de-la-espriella-hackea-tu-cerebro/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Pulzo (2026). Revelan cuántas bodegas apoyan a Valencia, De la Espriella y Cepeda. <a href="https://www.pulzo.com/elecciones-colombia-2026/revelan-cuantas-bodegas-apoyan-valencia-espriella-cepeda-PP5199197" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Prensa Mercosur (2026). De la Espriella arremete contra La Silla Vacía y Blu Radio. <a href="https://prensamercosur.org/2026/04/22/colombia-de-la-espriella-arremete-contra-la-silla-vacia-y-blu-radio-y-denuncia-millonaria-operacion-para-sabotear-su-candidatura-presidencial/" target="_blank" rel="noopener">Enlace</a></li>
+        </ol>
+
+        <p class="group">Guerra EE. UU./Israel–Irán y sistematización de la IA militar</p>
+        <ol>
+          <li>CNN Español (2026). Resumen de la guerra de EE.UU. e Israel con Irán. <a href="https://cnnespanol.cnn.com/2026/07/09/mundo/live-news/nuevos-ataques-iran-eeuu-vivo-trax" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Wikipedia. Guerra de Estados Unidos e Israel contra Irán. <a href="https://es.wikipedia.org/wiki/Guerra_de_Estados_Unidos_e_Israel_contra_Ir%C3%A1n" target="_blank" rel="noopener">Enlace</a></li>
+          <li>El Español (2026). Israel dice haber asesinado a más de 250 altos cargos iraníes. <a href="https://www.elespanol.com/mundo/oriente-proximo/20260331/israel-dice-asesinado-altos-cargos-iranies-decadas-espionaje-uso-inteligencia-artificial/1003744189958_0.html" target="_blank" rel="noopener">Enlace</a></li>
+          <li>La Nación (2026). Israel usa una nueva plataforma de IA para decapitar al liderazgo de Irán. <a href="https://www.lanacion.com.ar/el-mundo/israel-usa-una-nueva-plataforma-de-ia-para-decapitar-al-liderazgo-de-iran-nid31032026/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>EFE / El Comercio Perú (2026). El uso de IA en ataques a Irán preocupa por posibles errores. <a href="https://elcomercio.pe/tecnologia/actualidad/el-uso-de-ia-en-ataques-a-iran-preocupa-por-posibles-errores-en-la-seleccion-de-objetivos-estados-unidos-inteligencia-artificial-israel-noticia/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>EFE / SWI swissinfo.ch (2026). El uso de IA en ataques a Irán preocupa. <a href="https://www.swissinfo.ch/spa/el-uso-de-ia-en-ataques-a-ir%C3%A1n-preocupa-por-posibles-errores-en-la-selecci%C3%B3n-de-objetivos/91048084" target="_blank" rel="noopener">Enlace</a></li>
+          <li>El Nacional (2026). Uso de IA en ataques contra Irán genera controversia. <a href="https://www.elnacional.com/2026/03/uso-de-ia-en-ataques-contra-iran-genera-controversia/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>El Imparcial (2026), citando WSJ. EE.UU. e Israel emplean IA para acelerar la selección de objetivos. <a href="https://www.elimparcial.com/mundo/2026/03/09/estados-unidos-e-israel-emplean-inteligencia-artificial-para-acelerar-analisis-y-seleccion-de-objetivos-en-la-ofensiva-contra-iran-segun-reporte-de-the-wall-street-journal/" target="_blank" rel="noopener">Enlace</a></li>
+          <li>Wikipedia (EN). Cyberwarfare during the 2026 Iran war. <a href="https://en.wikipedia.org/wiki/Cyberwarfare_during_the_2026_Iran_war" target="_blank" rel="noopener">Enlace</a></li>
+        </ol>
+
+        <p class="group">Fuente descartada (documentada por transparencia metodológica)</p>
+        <ol>
+          <li>Perfil.com. El auge de los enjambres de IA. <b>[Clasificada Nivel D — no usada como base factual.]</b> <a href="https://www.perfil.com/noticias/tecnologia/el-auge-de-los-enjambres-de-inteligencia-artificial-capaces-de-infiltrar-comunidades-digitales-y-manipular-la-opinion-publica-global-a35.phtml" target="_blank" rel="noopener">Enlace</a></li>
+        </ol>
+      </div>
+
+      <div class="article-foot">
+        <a class="btn btn-solid" href="index.html#investigaciones">← Volver a investigaciones</a>
+        <a class="btn" href="verificacion.html">Ver protocolo de verificación</a>
+      </div>
+
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Proyecto ABYA — Producido por el centro de investigación Abya.</span>
+    <span><a href="index.html">Volver al inicio</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
