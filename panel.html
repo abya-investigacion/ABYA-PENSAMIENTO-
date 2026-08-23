@@ -207,9 +207,40 @@
           <label for="fResumen">Resumen breve</label>
           <textarea id="fResumen" placeholder="Un resumen corto que aparece en la tarjeta (2-3 líneas)"></textarea>
 
-          <label for="fCuerpo">Texto completo (opcional)</label>
-          <textarea id="fCuerpo" placeholder="Pega aquí el texto completo de la investigación. Si lo llenas, se crea una página de lectura DENTRO de tu sitio (no hace falta PDF ni Drive)." style="min-height:200px;"></textarea>
-          <p class="hint">Formato sencillo: deja una <b>línea en blanco</b> entre párrafos. Para un subtítulo, empieza la línea con <code>## </code>. Para viñetas, empieza la línea con <code>- </code>. Los enlaces que empiecen por http se vuelven clicables solos.</p>
+          <label>Texto completo (opcional) — editor tipo Word</label>
+          <style>
+            .rte-toolbar{ display:flex; flex-wrap:wrap; gap:4px; background:var(--bg-soft); border:1px solid var(--line); border-bottom:none; padding:8px; border-radius:2px 2px 0 0; }
+            .rte-toolbar button{ font-family:var(--body); font-size:12.5px; height:30px; padding:0 9px; background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:2px; cursor:pointer; line-height:1; }
+            .rte-toolbar button:hover{ border-color:var(--gold-soft); color:var(--gold); }
+            .rte-toolbar .sep{ width:1px; background:var(--line); margin:0 3px; }
+            .rte{ min-height:230px; max-height:460px; overflow-y:auto; background:#fbf7ec; color:#1b1b17; border:1px solid var(--line); border-radius:0 0 2px 2px; padding:16px 18px; font-family:var(--body); font-size:15px; line-height:1.65; }
+            .rte:focus{ outline:none; border-color:var(--gold-soft); }
+            .rte h2{ font-family:var(--display); font-size:20px; margin:14px 0 6px; color:#1b1b17; }
+            .rte h3{ font-family:var(--display); font-size:17px; margin:12px 0 4px; color:#1b1b17; }
+            .rte:empty:before{ content:attr(data-ph); color:#8a8577; }
+          </style>
+          <div class="rte-toolbar" id="rteToolbar">
+            <button type="button" data-cmd="bold" title="Negrita"><b>B</b></button>
+            <button type="button" data-cmd="italic" title="Cursiva"><i>I</i></button>
+            <button type="button" data-cmd="underline" title="Subrayado"><u>U</u></button>
+            <span class="sep"></span>
+            <button type="button" data-block="h2" title="Subtítulo">Subtítulo</button>
+            <button type="button" data-block="h3" title="Sub-subtítulo">Sub</button>
+            <button type="button" data-block="p" title="Texto normal">Normal</button>
+            <span class="sep"></span>
+            <button type="button" data-cmd="insertUnorderedList" title="Viñetas">• Lista</button>
+            <button type="button" data-cmd="insertOrderedList" title="Lista numerada">1. Lista</button>
+            <span class="sep"></span>
+            <button type="button" data-cmd="justifyLeft" title="Alinear izquierda">Izq</button>
+            <button type="button" data-cmd="justifyCenter" title="Centrar">Centro</button>
+            <button type="button" data-cmd="justifyRight" title="Alinear derecha">Der</button>
+            <button type="button" data-cmd="justifyFull" title="Justificar">Justificar</button>
+            <span class="sep"></span>
+            <button type="button" data-cmd="createLink" title="Insertar enlace">Enlace</button>
+            <button type="button" data-cmd="removeFormat" title="Quitar formato">Limpiar</button>
+          </div>
+          <div class="rte" id="fCuerpo" contenteditable="true" data-ph="Escribe o pega aquí el texto completo de la investigación. Usa la barra de arriba para negrita, subtítulos, viñetas y justificación — como en Word."></div>
+          <p class="hint">Si escribes texto aquí, se crea una página de lectura DENTRO de tu sitio (no hace falta PDF ni Drive). Deja "Enlace externo" vacío.</p>
 
           <label for="fEnlace">Enlace externo (opcional)</label>
           <input type="url" id="fEnlace" placeholder="Solo si NO usas el texto completo de arriba">
@@ -383,7 +414,7 @@
       alert('Completa al menos autor, título y resumen.');
       return;
     }
-    const cuerpo = $('fCuerpo').value.trim();
+    const cuerpo = cuerpoVacio() ? '' : getCuerpoHtml();
     const slug = cuerpo ? slugify(titulo) : '';
     const enlaceManual = $('fEnlace').value.trim();
     const nuevo = {
@@ -411,7 +442,7 @@
     editingId = null;
     imagenActual = '';
     $('fAutor').value = ''; $('fTitulo').value = ''; $('fResumen').value = ''; $('fEnlace').value = '';
-    $('fCuerpo').value = '';
+    $('fCuerpo').innerHTML = '';
     $('fTema').value = 'historia';
     $('imgPreview').style.display = 'none';
     $('imgPreview').src = '';
@@ -426,7 +457,7 @@
     if (!it) return;
     editingId = id;
     $('fAutor').value = it.autor; $('fTitulo').value = it.titulo; $('fResumen').value = it.resumen;
-    $('fCuerpo').value = it.cuerpo || '';
+    $('fCuerpo').innerHTML = it.cuerpo || '';
     $('fEnlace').value = (it.enlace && it.enlace !== '#' && it.enlace.indexOf('articulo.html?id=') !== 0) ? it.enlace : '';
     $('fTema').value = it.tema;
     imagenActual = it.imagen || '';
@@ -473,6 +504,50 @@
   $('filtroTema').addEventListener('change', renderLista);
 
   function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+  // ---- Editor de texto enriquecido (tipo Word) ----
+  try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch(e){}
+  document.getElementById('rteToolbar').addEventListener('click', (e) => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    e.preventDefault();
+    $('fCuerpo').focus();
+    if (btn.dataset.block){ document.execCommand('formatBlock', false, btn.dataset.block); return; }
+    const cmd = btn.dataset.cmd;
+    if (cmd === 'createLink'){
+      const url = prompt('Pega el enlace (empieza con https://):', 'https://');
+      if (url && url !== 'https://') document.execCommand('createLink', false, url);
+      return;
+    }
+    document.execCommand(cmd, false, null);
+  });
+
+  // Limpia el HTML del editor: conserva negrita, cursiva, subrayado, subtítulos,
+  // listas, enlaces y alineación; descarta colores/fuentes raras (p.ej. al pegar de Word).
+  function sanitizeHtml(html){
+    const wrap = document.createElement('div');
+    wrap.innerHTML = html || '';
+    wrap.querySelectorAll('script,style,link,meta,iframe,object,embed,img').forEach(n => n.remove());
+    wrap.querySelectorAll('div').forEach(d => {
+      const p = document.createElement('p');
+      if (d.style && d.style.textAlign) p.style.textAlign = d.style.textAlign;
+      while (d.firstChild) p.appendChild(d.firstChild);
+      d.replaceWith(p);
+    });
+    const ALLOWED = {B:1,STRONG:1,I:1,EM:1,U:1,P:1,H2:1,H3:1,UL:1,OL:1,LI:1,BR:1,A:1,BLOCKQUOTE:1};
+    const KEEP_ALIGN = {P:1,H2:1,H3:1,LI:1,UL:1,OL:1,BLOCKQUOTE:1};
+    wrap.querySelectorAll('*').forEach(el => {
+      const tag = el.tagName;
+      const align = el.style ? el.style.textAlign : '';
+      const href = tag === 'A' ? el.getAttribute('href') : '';
+      Array.prototype.slice.call(el.attributes).forEach(a => el.removeAttribute(a.name));
+      if (align && KEEP_ALIGN[tag]) el.style.textAlign = align;
+      if (tag === 'A' && href){ el.setAttribute('href', href); el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
+      if (!ALLOWED[tag]) el.replaceWith.apply(el, Array.prototype.slice.call(el.childNodes));
+    });
+    return wrap.innerHTML.trim();
+  }
+  function getCuerpoHtml(){ return sanitizeHtml($('fCuerpo').innerHTML); }
+  function cuerpoVacio(){ const d = document.createElement('div'); d.innerHTML = $('fCuerpo').innerHTML; return !((d.textContent || '').trim()); }
 
   // Convierte un título en un identificador para la URL de la página de lectura.
   function slugify(s){

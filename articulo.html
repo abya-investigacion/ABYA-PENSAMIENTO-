@@ -62,7 +62,12 @@
   article ul li{ position:relative; padding-left:22px; margin-bottom:12px; font-size:16px; color:#E7DCC4; }
   article ul li::before{ content:""; position:absolute; left:2px; top:12px; width:7px; height:7px; background:var(--gold-soft); border-radius:50%; }
   article a{ color:var(--gold); word-break:break-word; }
-  article strong{ color:var(--ink); }
+  article strong, article b{ color:var(--ink); }
+  article em, article i{ font-style:italic; }
+  article u{ text-underline-offset:2px; }
+  article ol{ margin:0 0 22px; padding-left:24px; }
+  article ol li{ margin-bottom:12px; font-size:16px; color:#E7DCC4; }
+  article blockquote{ margin:0 0 22px; padding-left:18px; border-left:2px solid var(--gold-soft); color:var(--ink-dim); }
 
   .btn{ font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:12px 20px; border-radius:2px; display:inline-flex; align-items:center; gap:8px; border:1px solid var(--gold-soft); color:var(--ink); transition:border-color .2s ease, transform .2s ease; }
   .btn:hover{ border-color:var(--gold); transform:translateY(-2px); }
@@ -158,6 +163,32 @@
     return html;
   }
 
+  // Limpia el HTML guardado (del editor tipo Word): conserva formato de texto y
+  // alineación, descarta scripts/estilos/colores. Es contenido propio del sitio.
+  function sanitizeHtml(html){
+    const wrap = document.createElement('div');
+    wrap.innerHTML = html || '';
+    wrap.querySelectorAll('script,style,link,meta,iframe,object,embed,img').forEach(n => n.remove());
+    wrap.querySelectorAll('div').forEach(d => {
+      const p = document.createElement('p');
+      if (d.style && d.style.textAlign) p.style.textAlign = d.style.textAlign;
+      while (d.firstChild) p.appendChild(d.firstChild);
+      d.replaceWith(p);
+    });
+    const ALLOWED = {B:1,STRONG:1,I:1,EM:1,U:1,P:1,H2:1,H3:1,UL:1,OL:1,LI:1,BR:1,A:1,BLOCKQUOTE:1};
+    const KEEP_ALIGN = {P:1,H2:1,H3:1,LI:1,UL:1,OL:1,BLOCKQUOTE:1};
+    wrap.querySelectorAll('*').forEach(el => {
+      const tag = el.tagName;
+      const align = el.style ? el.style.textAlign : '';
+      const href = tag === 'A' ? el.getAttribute('href') : '';
+      Array.prototype.slice.call(el.attributes).forEach(a => el.removeAttribute(a.name));
+      if (align && KEEP_ALIGN[tag]) el.style.textAlign = align;
+      if (tag === 'A' && href){ el.setAttribute('href', href); el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
+      if (!ALLOWED[tag]) el.replaceWith.apply(el, Array.prototype.slice.call(el.childNodes));
+    });
+    return wrap.innerHTML.trim();
+  }
+
   function showState(msg){
     document.getElementById('main').innerHTML =
       '<div class="state">' + escapeHtml(msg) +
@@ -168,7 +199,14 @@
     const tema = it.tema || 'historia';
     document.title = it.titulo + ' — ABYA';
     const img = it.imagen ? '<img class="hero-img" src="' + it.imagen + '" alt="Ilustración de la investigación">' : '';
-    const cuerpo = it.cuerpo ? renderCuerpo(it.cuerpo) : ('<p>' + inline(it.resumen || '') + '</p>');
+    let cuerpo;
+    if (it.cuerpo){
+      // Si el cuerpo ya trae etiquetas HTML (editor tipo Word), se muestra tal cual (limpio);
+      // si es texto plano (formato antiguo), se convierte con renderCuerpo.
+      cuerpo = /<[a-z][\s\S]*>/i.test(it.cuerpo) ? sanitizeHtml(it.cuerpo) : renderCuerpo(it.cuerpo);
+    } else {
+      cuerpo = '<p>' + inline(it.resumen || '') + '</p>';
+    }
     document.getElementById('main').innerHTML =
       '<section class="pagehero"><div class="readwrap">' +
         '<p><a class="eyebrow" href="index.html#investigaciones">← Volver al archivo</a></p>' +
