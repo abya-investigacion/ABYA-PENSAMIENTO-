@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investigación — ABYA</title>
+<meta name="description" content="Investigación del archivo ABYA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12140E; --bg-soft:#191C13; --panel:#1D2117; --ink:#EFE6CF; --ink-dim:#A79C82;
+    --gold:#C9A24B; --gold-soft:#8A7440; --line:#33362B;
+    --historia:#4B5A2E; --historia-ink:#C9D6A6;
+    --politica:#1B3550; --politica-ink:#A9C6DE;
+    --psicologia:#4A3160; --psicologia-ink:#CBB4E0;
+    --feminismo:#7A3B2E; --feminismo-ink:#EAC0AA;
+    --conflicto:#6B1F1F; --conflicto-ink:#E7B2AC;
+    --display:'Fraunces', serif; --body:'Work Sans', sans-serif; --mono:'Space Mono', monospace;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+  .readwrap{ max-width:760px; margin:0 auto; padding:0 28px; }
+  ::selection{ background:var(--gold); color:#14160F; }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--gold-soft); display:inline-block; }
+  h1,h2,h3{ font-family:var(--display); font-weight:700; margin:0; color:var(--ink); }
+
+  header{ position:sticky; top:0; z-index:50; background:rgba(18,20,14,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); padding:16px 0; }
+  header .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .logo svg{ width:28px; height:28px; }
+  .logo span{ font-family:var(--display); font-weight:900; font-size:20px; color:var(--ink); }
+  nav.mainnav{ display:flex; gap:26px; flex-wrap:wrap; }
+  nav.mainnav a{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; color:var(--ink-dim); }
+  nav.mainnav a:hover{ color:var(--gold); }
+
+  .pagehero{ padding:66px 0 36px; border-bottom:1px solid var(--line); }
+  .tema-tag{ display:inline-block; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; padding:5px 12px; border-radius:2px; margin-bottom:18px; }
+  .tag-historia{ background:color-mix(in srgb, var(--historia) 55%, black); color:var(--historia-ink); }
+  .tag-politica{ background:color-mix(in srgb, var(--politica) 55%, black); color:var(--politica-ink); }
+  .tag-psicologia{ background:color-mix(in srgb, var(--psicologia) 55%, black); color:var(--psicologia-ink); }
+  .tag-feminismo{ background:color-mix(in srgb, var(--feminismo) 55%, black); color:var(--feminismo-ink); }
+  .tag-conflicto{ background:color-mix(in srgb, var(--conflicto) 55%, black); color:var(--conflicto-ink); }
+  .pagehero h1{ font-size:clamp(30px,5vw,50px); line-height:1.05; }
+  .byline{ margin-top:20px; font-family:var(--mono); font-size:12.5px; color:var(--ink-dim); display:flex; gap:16px; flex-wrap:wrap; }
+  .byline b{ color:var(--ink); font-weight:700; }
+  .hero-img{ margin-top:34px; border:1px solid var(--line); border-radius:4px; }
+
+  article{ padding:44px 0 30px; }
+  article p{ margin:0 0 20px; font-size:17px; color:#E7DCC4; }
+  article h2{ font-family:var(--display); font-size:25px; margin:40px 0 10px; line-height:1.15; }
+  article h3{ font-family:var(--display); font-weight:600; font-size:19px; margin:28px 0 8px; color:var(--gold); }
+  article ul{ margin:0 0 22px; padding-left:0; list-style:none; }
+  article ul li{ position:relative; padding-left:22px; margin-bottom:12px; font-size:16px; color:#E7DCC4; }
+  article ul li::before{ content:""; position:absolute; left:2px; top:12px; width:7px; height:7px; background:var(--gold-soft); border-radius:50%; }
+  article a{ color:var(--gold); word-break:break-word; }
+  article strong{ color:var(--ink); }
+
+  .btn{ font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:12px 20px; border-radius:2px; display:inline-flex; align-items:center; gap:8px; border:1px solid var(--gold-soft); color:var(--ink); transition:border-color .2s ease, transform .2s ease; }
+  .btn:hover{ border-color:var(--gold); transform:translateY(-2px); }
+  .btn-solid{ background:var(--gold); color:#17190F; border:none; }
+  .btn-solid:hover{ background:#DBB25E; }
+  .article-foot{ margin-top:48px; padding-top:28px; border-top:1px solid var(--line); display:flex; gap:14px; flex-wrap:wrap; }
+
+  .state{ padding:90px 0; text-align:center; font-family:var(--mono); color:var(--ink-dim); }
+
+  footer{ border-top:1px solid var(--line); padding:44px 0 30px; margin-top:40px; }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:11px; color:var(--ink-dim); opacity:.75; }
+
+  @media (max-width:640px){
+    nav.mainnav{ display:none; }
+    article p{ font-size:16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="7" stroke="#C9A24B" stroke-width="1.6"/>
+        <g stroke="#C9A24B" stroke-width="1.6">
+          <line x1="20" y1="2" x2="20" y2="8"/><line x1="20" y1="32" x2="20" y2="38"/>
+          <line x1="2" y1="20" x2="8" y2="20"/><line x1="32" y1="20" x2="38" y2="20"/>
+          <line x1="7" y1="7" x2="11.5" y2="11.5"/><line x1="28.5" y1="28.5" x2="33" y2="33"/>
+          <line x1="33" y1="7" x2="28.5" y2="11.5"/><line x1="11.5" y1="28.5" x2="7" y2="33"/>
+        </g>
+      </svg>
+      <span>ABYA</span>
+    </a>
+    <nav class="mainnav">
+      <a href="index.html">Inicio</a>
+      <a href="index.html#investigaciones">Investigaciones</a>
+      <a href="index.html#podcast">Podcast</a>
+      <a href="index.html#redes">Redes</a>
+      <a href="verificacion.html">Verificación</a>
+      <a href="panel.html">Panel de contenido</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="state" id="state">Cargando investigación…</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Proyecto ABYA — Producido por el centro de investigación Abya.</span>
+    <span><a href="index.html">Volver al inicio</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const TAG_LABEL = { historia:'Historia', politica:'Política', psicologia:'Psicología', feminismo:'Feminismo y Derecho', conflicto:'Conflicto' };
+
+  function slugify(s){
+    return (s || '').toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 60) || 'articulo';
+  }
+  function getParam(name){
+    const m = new RegExp('[?&]' + name + '=([^&]+)').exec(location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+  }
+  function escapeHtml(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function inline(s){
+    let t = escapeHtml(s);
+    t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');           // **negrita**
+    t = t.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); // enlaces
+    return t;
+  }
+
+  // Convierte el texto pegado en el panel a HTML con párrafos, subtítulos y viñetas.
+  function renderCuerpo(text){
+    const lines = String(text || '').replace(/\r\n/g, '\n').split('\n');
+    let html = '', inList = false, para = [];
+    const flushPara = () => { if (para.length){ html += '<p>' + inline(para.join(' ')) + '</p>'; para = []; } };
+    const closeList = () => { if (inList){ html += '</ul>'; inList = false; } };
+    for (const raw of lines){
+      const line = raw.trim();
+      if (!line){ flushPara(); closeList(); continue; }
+      if (line.indexOf('### ') === 0){ flushPara(); closeList(); html += '<h3>' + escapeHtml(line.slice(4)) + '</h3>'; continue; }
+      if (line.indexOf('## ') === 0){ flushPara(); closeList(); html += '<h2>' + escapeHtml(line.slice(3)) + '</h2>'; continue; }
+      if (line.indexOf('- ') === 0){ flushPara(); if (!inList){ html += '<ul>'; inList = true; } html += '<li>' + inline(line.slice(2)) + '</li>'; continue; }
+      para.push(line);
+    }
+    flushPara(); closeList();
+    return html;
+  }
+
+  function showState(msg){
+    document.getElementById('main').innerHTML =
+      '<div class="state">' + escapeHtml(msg) +
+      '<div style="margin-top:22px;"><a class="btn" href="index.html#investigaciones">← Volver a investigaciones</a></div></div>';
+  }
+
+  function render(it){
+    const tema = it.tema || 'historia';
+    document.title = it.titulo + ' — ABYA';
+    const img = it.imagen ? '<img class="hero-img" src="' + it.imagen + '" alt="Ilustración de la investigación">' : '';
+    const cuerpo = it.cuerpo ? renderCuerpo(it.cuerpo) : ('<p>' + inline(it.resumen || '') + '</p>');
+    document.getElementById('main').innerHTML =
+      '<section class="pagehero"><div class="readwrap">' +
+        '<p><a class="eyebrow" href="index.html#investigaciones">← Volver al archivo</a></p>' +
+        '<span class="tema-tag tag-' + tema + '">' + (TAG_LABEL[tema] || tema) + '</span>' +
+        '<h1>' + escapeHtml(it.titulo) + '</h1>' +
+        '<div class="byline"><span>Investigación de <b>' + escapeHtml(it.autor || '—') + '</b></span><span>Centro de investigación ABYA</span></div>' +
+        img +
+      '</div></section>' +
+      '<article><div class="readwrap">' + cuerpo +
+        '<div class="article-foot">' +
+          '<a class="btn btn-solid" href="index.html#investigaciones">← Volver a investigaciones</a>' +
+          '<a class="btn" href="verificacion.html">Ver protocolo de verificación</a>' +
+        '</div>' +
+      '</div></article>';
+  }
+
+  const id = getParam('id');
+  if (!id){ showState('No se indicó qué investigación mostrar.'); return; }
+
+  fetch('investigaciones.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(data => {
+      const items = Array.isArray(data) ? data : [];
+      const it = items.find(x => (x.slug && x.slug === id) || slugify(x.titulo) === id);
+      if (!it){ showState('No se encontró esta investigación.'); return; }
+      render(it);
+    })
+    .catch(() => showState('No se pudo cargar el archivo de investigaciones.'));
+})();
+</script>
+
+</body>
+</html>

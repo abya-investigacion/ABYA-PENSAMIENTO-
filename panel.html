@@ -207,9 +207,13 @@
           <label for="fResumen">Resumen breve</label>
           <textarea id="fResumen" placeholder="Un resumen corto que aparece en la tarjeta (2-3 líneas)"></textarea>
 
-          <label for="fEnlace">Enlace (opcional)</label>
-          <input type="url" id="fEnlace" placeholder="Link al PDF completo o página con el texto entero">
-          <p class="hint">Si subes el PDF por separado a Netlify, pon aquí el nombre del archivo, ej: <code>investigacion-granados.pdf</code></p>
+          <label for="fCuerpo">Texto completo (opcional)</label>
+          <textarea id="fCuerpo" placeholder="Pega aquí el texto completo de la investigación. Si lo llenas, se crea una página de lectura DENTRO de tu sitio (no hace falta PDF ni Drive)." style="min-height:200px;"></textarea>
+          <p class="hint">Formato sencillo: deja una <b>línea en blanco</b> entre párrafos. Para un subtítulo, empieza la línea con <code>## </code>. Para viñetas, empieza la línea con <code>- </code>. Los enlaces que empiecen por http se vuelven clicables solos.</p>
+
+          <label for="fEnlace">Enlace externo (opcional)</label>
+          <input type="url" id="fEnlace" placeholder="Solo si NO usas el texto completo de arriba">
+          <p class="hint">Déjalo <b>vacío</b> si llenaste el "Texto completo". Úsalo solo si prefieres enviar a un PDF o página externa, ej: <code>investigacion-granados.pdf</code></p>
 
           <label>Imagen de la tarjeta</label>
           <label class="filerow" id="fileRow">
@@ -379,11 +383,18 @@
       alert('Completa al menos autor, título y resumen.');
       return;
     }
+    const cuerpo = $('fCuerpo').value.trim();
+    const slug = cuerpo ? slugify(titulo) : '';
+    const enlaceManual = $('fEnlace').value.trim();
     const nuevo = {
       id: editingId || ('i_' + Math.random().toString(36).slice(2)),
       tema: $('fTema').value,
       autor, titulo, resumen,
-      enlace: $('fEnlace').value.trim() || '#',
+      cuerpo,
+      slug,
+      // Si hay texto completo, el enlace apunta a la página de lectura interna;
+      // si no, usa el enlace externo (o '#').
+      enlace: cuerpo ? ('articulo.html?id=' + slug) : (enlaceManual || '#'),
       imagen: imagenActual || (editingId ? (items.find(i=>i.id===editingId)||{}).imagen : '') || ''
     };
     if (editingId){
@@ -400,6 +411,7 @@
     editingId = null;
     imagenActual = '';
     $('fAutor').value = ''; $('fTitulo').value = ''; $('fResumen').value = ''; $('fEnlace').value = '';
+    $('fCuerpo').value = '';
     $('fTema').value = 'historia';
     $('imgPreview').style.display = 'none';
     $('imgPreview').src = '';
@@ -414,7 +426,8 @@
     if (!it) return;
     editingId = id;
     $('fAutor').value = it.autor; $('fTitulo').value = it.titulo; $('fResumen').value = it.resumen;
-    $('fEnlace').value = it.enlace === '#' ? '' : it.enlace;
+    $('fCuerpo').value = it.cuerpo || '';
+    $('fEnlace').value = (it.enlace && it.enlace !== '#' && it.enlace.indexOf('articulo.html?id=') !== 0) ? it.enlace : '';
     $('fTema').value = it.tema;
     imagenActual = it.imagen || '';
     if (imagenActual){ $('imgPreview').src = imagenActual; $('imgPreview').style.display = 'block'; }
@@ -460,6 +473,13 @@
   $('filtroTema').addEventListener('change', renderLista);
 
   function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+  // Convierte un título en un identificador para la URL de la página de lectura.
+  function slugify(s){
+    return (s || '').toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')   // quita acentos
+      .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 60) || 'articulo';
+  }
 
   // ---- restaurar / exportar ----
   $('btnRestaurar').addEventListener('click', () => {
